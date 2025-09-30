@@ -4,6 +4,8 @@ struct OnboardingPlanScreen: View {
     let model: OnboardingScreen
     let onContinue: () -> Void
     
+    @EnvironmentObject private var themeManager: ThemeManager
+    
     var body: some View {
         VStack(spacing: 24) {
             // Progress Header
@@ -22,18 +24,19 @@ struct OnboardingPlanScreen: View {
                 // Plan Icon
                 Image(systemName: "sparkles")
                     .font(.system(size: 60))
-                    .foregroundColor(.blue)
+                    .foregroundColor(themeManager.primary)
                 
                 // Plan Title
                 Text("Your Style Journey Awaits")
                     .font(.title)
                     .fontWeight(.bold)
+                    .foregroundColor(themeManager.textPrimary)
                     .multilineTextAlignment(.center)
                 
                 // Plan Description
                 Text("Based on your preferences, we've created a personalized roadmap to help you discover and refine your unique aesthetic.")
                     .font(.body)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(themeManager.textSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                 
@@ -69,7 +72,7 @@ struct OnboardingPlanScreen: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(themeManager.primary)
                     .cornerRadius(12)
             }
             .padding(.horizontal)
@@ -83,27 +86,29 @@ struct PlanDetailRow: View {
     let title: String
     let description: String
     
+    @EnvironmentObject private var themeManager: ThemeManager
+    
     var body: some View {
         HStack(spacing: 16) {
             Image(systemName: icon)
                 .font(.title2)
-                .foregroundColor(.blue)
+                .foregroundColor(themeManager.primary)
                 .frame(width: 30)
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.headline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(themeManager.textPrimary)
                 
                 Text(description)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(themeManager.textSecondary)
             }
             
             Spacer()
         }
         .padding()
-        .background(Color(.systemGray6))
+        .background(themeManager.surface)
         .cornerRadius(12)
     }
 }

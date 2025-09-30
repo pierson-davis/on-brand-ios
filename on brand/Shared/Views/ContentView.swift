@@ -35,7 +35,7 @@ struct ContentView: View {
                     } else {
                         // New user or no saved profile - show onboarding
                 OnboardingFlowView(vm: vm)
-                        .onChange(of: vm.finished) { finished in
+                        .onChange(of: vm.finished) { _, finished in
                             if finished {
                                 let result = vm.makeVibeResult()
                                 saveUserProfile(result)

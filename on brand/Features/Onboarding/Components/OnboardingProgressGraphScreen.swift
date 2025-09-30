@@ -15,7 +15,7 @@ struct OnboardingProgressGraphScreen: View {
 
     @ViewBuilder
     var body: some View {
-        if case let .progressGraph(title, weeks) = model.content {
+        if case let .progressGraph(title, _) = model.content {
             VStack(alignment: .leading, spacing: 28) {
                 OnboardingProgressHeader(
                     index: model.progressIndex,
@@ -90,31 +90,31 @@ struct OnboardingProgressGraphScreen: View {
                         VStack(alignment: .leading, spacing: 16) {
                             Text("What you'll track:")
                                 .font(.headline)
-                                .foregroundColor(.black)
+                                .foregroundColor(themeManager.textPrimary)
                             
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack(spacing: 12) {
                                     Image(systemName: "photo.stack")
-                                        .foregroundColor(.blue)
+                                        .foregroundColor(themeManager.primary)
                                     Text("Photo quality consistency")
                                         .font(.subheadline)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(themeManager.textPrimary)
                                 }
                                 
                                 HStack(spacing: 12) {
                                     Image(systemName: "paintpalette")
-                                        .foregroundColor(.purple)
+                                        .foregroundColor(themeManager.accent)
                                     Text("Color palette adherence")
                                         .font(.subheadline)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(themeManager.textPrimary)
                                 }
                                 
                                 HStack(spacing: 12) {
                                     Image(systemName: "chart.line.uptrend.xyaxis")
-                                        .foregroundColor(.green)
+                                        .foregroundColor(themeManager.secondary)
                                     Text("Engagement improvement")
                                         .font(.subheadline)
-                                        .foregroundColor(.black)
+                                        .foregroundColor(themeManager.textPrimary)
                                 }
                             }
                         }

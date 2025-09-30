@@ -12,6 +12,7 @@ struct on_brandApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(ThemeManager.shared)
         }
     }
 }

@@ -73,12 +73,12 @@ struct ProfileView: View {
             maxSelectionCount: 20,
             matching: .images
         )
-        .onChange(of: selectedItems) { newItems in
+        .onChange(of: selectedItems) { _, newItems in
             Task {
                 await loadImages(from: newItems)
             }
         }
-        .onChange(of: selectedTab) { newTab in
+        .onChange(of: selectedTab) { _, newTab in
             handleTabChange(newTab)
         }
     }

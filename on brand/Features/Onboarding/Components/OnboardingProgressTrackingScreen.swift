@@ -126,21 +126,21 @@ struct OnboardingProgressTrackingScreen: View {
         switch content {
         case .progressTracking:
             return [
-                Feature(icon: "photo.stack", color: .blue, text: "Photo analysis and curation"),
-                Feature(icon: "paintpalette", color: .purple, text: "Aesthetic consistency scoring"),
-                Feature(icon: "calendar", color: .green, text: "Daily style check-ins")
+                Feature(icon: "photo.stack", color: themeManager.primary, text: "Photo analysis and curation"),
+                Feature(icon: "paintpalette", color: themeManager.accent, text: "Aesthetic consistency scoring"),
+                Feature(icon: "calendar", color: themeManager.secondary, text: "Daily style check-ins")
             ]
         case .habitTracking:
             return [
-                Feature(icon: "checkmark.circle", color: .green, text: "Consistent photo posting"),
-                Feature(icon: "paintpalette", color: .purple, text: "Color palette adherence"),
-                Feature(icon: "star.fill", color: .orange, text: "Quality over quantity")
+                Feature(icon: "checkmark.circle", color: themeManager.secondary, text: "Consistent photo posting"),
+                Feature(icon: "paintpalette", color: themeManager.accent, text: "Color palette adherence"),
+                Feature(icon: "star.fill", color: themeManager.primary, text: "Quality over quantity")
             ]
         case .dailyCheckin:
             return [
-                Feature(icon: "sun.max", color: .yellow, text: "Morning style inspiration"),
-                Feature(icon: "heart.fill", color: .red, text: "Motivation and encouragement"),
-                Feature(icon: "target", color: .blue, text: "Goal tracking and reminders")
+                Feature(icon: "sun.max", color: themeManager.accent, text: "Morning style inspiration"),
+                Feature(icon: "heart.fill", color: themeManager.secondary, text: "Motivation and encouragement"),
+                Feature(icon: "target", color: themeManager.primary, text: "Goal tracking and reminders")
             ]
         default:
             return []

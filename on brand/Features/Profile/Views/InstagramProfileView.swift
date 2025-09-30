@@ -70,7 +70,7 @@ struct InstagramProfileView: View {
             maxSelectionCount: 20,
             matching: .images
         )
-        .onChange(of: selectedItems) { newItems in
+        .onChange(of: selectedItems) { _, newItems in
             Task {
                 uiImages = await loadImages(from: newItems)
                 await analyzePhotos()

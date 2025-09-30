@@ -33,13 +33,13 @@ struct PhotoAnalyzerView: View {
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarHidden(true)
-                .onChange(of: selectedItems) { newItems in
+                .onChange(of: selectedItems) { _, newItems in
                     Task {
                         uiImages = await loadImages(from: newItems)
                         await analyzePhotos()
                     }
                 }
-                .onChange(of: selectedTab) { newTab in
+                .onChange(of: selectedTab) { _, newTab in
                     handleTabChange(newTab)
                 }
                 .photosPicker(

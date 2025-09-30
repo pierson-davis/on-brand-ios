@@ -8,12 +8,72 @@
 
 /* Begin PBXBuildFile section */
 		7BC4B3262E8B9BA6002E6EC0 /* on_brandApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3252E8B9BA6002E6EC0 /* on_brandApp.swift */; };
-		7BC4B3282E8B9BA6002E6EC0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3272E8B9BA6002E6EC0 /* ContentView.swift */; };
 		7BC4B32A2E8B9BA9002E6EC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BC4B3292E8B9BA9002E6EC0 /* Assets.xcassets */; };
 		7BC4B32E2E8B9BA9002E6EC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BC4B32D2E8B9BA9002E6EC0 /* Preview Assets.xcassets */; };
 		7BC4B3382E8B9BAA002E6EC0 /* on_brandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3372E8B9BAA002E6EC0 /* on_brandTests.swift */; };
 		7BC4B3422E8B9BAA002E6EC0 /* on_brandUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3412E8B9BAA002E6EC0 /* on_brandUITests.swift */; };
 		7BC4B3442E8B9BAA002E6EC0 /* on_brandUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3432E8B9BAA002E6EC0 /* on_brandUITestsLaunchTests.swift */; };
+		7BC4B3E62E8BA696002E6EC0 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7BC4B3E12E8BA696002E6EC0 /* Secrets.xcconfig */; };
+		7BC4B3E72E8BA696002E6EC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3E32E8BA696002E6EC0 /* AppDelegate.swift */; };
+		
+		7BC4B3E92E8BA696002E6EC0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3E52E8BA696002E6EC0 /* SceneDelegate.swift */; };
+		
+		7BC4B3F02E8BA6B5002E6EC0 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3EE2E8BA6B5002E6EC0 /* ThemeManager.swift */; };
+		7BC4B3F12E8BA6B5002E6EC0 /* EraDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3EF2E8BA6B5002E6EC0 /* EraDesignSystem.swift */; };
+		7BC4B4352E8BA6C3002E6EC0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3F52E8BA6C3002E6EC0 /* SettingsView.swift */; };
+		7BC4B4362E8BA6C3002E6EC0 /* RecentPhotosSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3F82E8BA6C3002E6EC0 /* RecentPhotosSection.swift */; };
+		7BC4B4372E8BA6C3002E6EC0 /* WelcomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3F92E8BA6C3002E6EC0 /* WelcomeSection.swift */; };
+		7BC4B4382E8BA6C3002E6EC0 /* QuickActionsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3FA2E8BA6C3002E6EC0 /* QuickActionsSection.swift */; };
+		7BC4B4392E8BA6C3002E6EC0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3FC2E8BA6C3002E6EC0 /* HomeView.swift */; };
+		7BC4B43A2E8BA6C3002E6EC0 /* AnalyzeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B3FF2E8BA6C3002E6EC0 /* AnalyzeViewModel.swift */; };
+		7BC4B43B2E8BA6C3002E6EC0 /* PhotoPickerSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4012E8BA6C3002E6EC0 /* PhotoPickerSection.swift */; };
+		7BC4B43C2E8BA6C3002E6EC0 /* PhotoAnalyzerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4022E8BA6C3002E6EC0 /* PhotoAnalyzerView.swift */; };
+		7BC4B43D2E8BA6C3002E6EC0 /* AICurationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4032E8BA6C3002E6EC0 /* AICurationSection.swift */; };
+		7BC4B43E2E8BA6C3002E6EC0 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4052E8BA6C3002E6EC0 /* AIService.swift */; };
+		7BC4B43F2E8BA6C3002E6EC0 /* VibeAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4062E8BA6C3002E6EC0 /* VibeAnalyzer.swift */; };
+		7BC4B4402E8BA6C3002E6EC0 /* BioSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4092E8BA6C3002E6EC0 /* BioSection.swift */; };
+		7BC4B4412E8BA6C3002E6EC0 /* InstagramTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B40A2E8BA6C3002E6EC0 /* InstagramTopBar.swift */; };
+		7BC4B4422E8BA6C3002E6EC0 /* InstagramActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B40B2E8BA6C3002E6EC0 /* InstagramActionButtons.swift */; };
+		7BC4B4432E8BA6C3002E6EC0 /* InstagramContentTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B40C2E8BA6C3002E6EC0 /* InstagramContentTabs.swift */; };
+		7BC4B4442E8BA6C3002E6EC0 /* ActionButtonsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B40D2E8BA6C3002E6EC0 /* ActionButtonsSection.swift */; };
+		7BC4B4452E8BA6C3002E6EC0 /* AnalysisCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B40E2E8BA6C3002E6EC0 /* AnalysisCard.swift */; };
+		7BC4B4462E8BA6C4002E6EC0 /* InstagramPhotoGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B40F2E8BA6C3002E6EC0 /* InstagramPhotoGrid.swift */; };
+		7BC4B4472E8BA6C4002E6EC0 /* InstagramProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4102E8BA6C3002E6EC0 /* InstagramProfileHeader.swift */; };
+		7BC4B4482E8BA6C4002E6EC0 /* ContentTabsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4112E8BA6C3002E6EC0 /* ContentTabsSection.swift */; };
+		7BC4B4492E8BA6C4002E6EC0 /* ProfileHeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4122E8BA6C3002E6EC0 /* ProfileHeaderSection.swift */; };
+		7BC4B44A2E8BA6C4002E6EC0 /* PhotoGridSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4132E8BA6C3002E6EC0 /* PhotoGridSection.swift */; };
+		7BC4B44B2E8BA6C4002E6EC0 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4152E8BA6C3002E6EC0 /* ProfileView.swift */; };
+		7BC4B44C2E8BA6C4002E6EC0 /* InstagramProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4162E8BA6C3002E6EC0 /* InstagramProfileView.swift */; };
+		7BC4B44D2E8BA6C4002E6EC0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4192E8BA6C3002E6EC0 /* LoginView.swift */; };
+		7BC4B44E2E8BA6C4002E6EC0 /* LoginLoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B41A2E8BA6C3002E6EC0 /* LoginLoadingOverlay.swift */; };
+		7BC4B44F2E8BA6C4002E6EC0 /* AppleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B41B2E8BA6C3002E6EC0 /* AppleSignInButton.swift */; };
+		7BC4B4502E8BA6C4002E6EC0 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B41D2E8BA6C3002E6EC0 /* AuthenticationService.swift */; };
+		7BC4B4512E8BA6C4002E6EC0 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4202E8BA6C3002E6EC0 /* OnboardingViewModel.swift */; };
+		7BC4B4522E8BA6C4002E6EC0 /* OnboardingQuestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4222E8BA6C3002E6EC0 /* OnboardingQuestions.swift */; };
+		7BC4B4532E8BA6C4002E6EC0 /* QuizModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4232E8BA6C3002E6EC0 /* QuizModels.swift */; };
+		7BC4B4542E8BA6C4002E6EC0 /* OnboardingScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4242E8BA6C3002E6EC0 /* OnboardingScreenModel.swift */; };
+		7BC4B4552E8BA6C4002E6EC0 /* OnboardingQuestionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4262E8BA6C3002E6EC0 /* OnboardingQuestionScreen.swift */; };
+		7BC4B4562E8BA6C4002E6EC0 /* OnboardingProgressHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4272E8BA6C3002E6EC0 /* OnboardingProgressHeader.swift */; };
+		7BC4B4572E8BA6C4002E6EC0 /* OnboardingProgressGraphScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4282E8BA6C3002E6EC0 /* OnboardingProgressGraphScreen.swift */; };
+		7BC4B4582E8BA6C4002E6EC0 /* GenderSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4292E8BA6C3002E6EC0 /* GenderSelectionView.swift */; };
+		7BC4B4592E8BA6C4002E6EC0 /* OnboardingPermissionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B42A2E8BA6C3002E6EC0 /* OnboardingPermissionScreen.swift */; };
+		7BC4B45A2E8BA6C4002E6EC0 /* OnboardingChecklistScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B42B2E8BA6C3002E6EC0 /* OnboardingChecklistScreen.swift */; };
+		7BC4B45B2E8BA6C4002E6EC0 /* OnboardingSummaryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B42C2E8BA6C3002E6EC0 /* OnboardingSummaryScreen.swift */; };
+		7BC4B45C2E8BA6C4002E6EC0 /* NameInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B42D2E8BA6C3002E6EC0 /* NameInputView.swift */; };
+		7BC4B45D2E8BA6C4002E6EC0 /* OnboardingWelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B42E2E8BA6C3002E6EC0 /* OnboardingWelcomeScreen.swift */; };
+		7BC4B45E2E8BA6C4002E6EC0 /* OnboardingProgressTrackingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B42F2E8BA6C3002E6EC0 /* OnboardingProgressTrackingScreen.swift */; };
+		7BC4B45F2E8BA6C4002E6EC0 /* OnboardingProblemScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4302E8BA6C3002E6EC0 /* OnboardingProblemScreen.swift */; };
+		7BC4B4602E8BA6C4002E6EC0 /* OnboardingPlanScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4312E8BA6C3002E6EC0 /* OnboardingPlanScreen.swift */; };
+		7BC4B4612E8BA6C4002E6EC0 /* OnboardingHeroScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4322E8BA6C3002E6EC0 /* OnboardingHeroScreen.swift */; };
+		7BC4B4622E8BA6C4002E6EC0 /* OnboardingQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4342E8BA6C3002E6EC0 /* OnboardingQuestionView.swift */; };
+		7BC4B46E2E8BA6D5002E6EC0 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4652E8BA6D5002E6EC0 /* UserProfile.swift */; };
+		7BC4B46F2E8BA6D5002E6EC0 /* Archetype.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4662E8BA6D5002E6EC0 /* Archetype.swift */; };
+		7BC4B4702E8BA6D5002E6EC0 /* AIPromptModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4672E8BA6D5002E6EC0 /* AIPromptModels.swift */; };
+		7BC4B4712E8BA6D5002E6EC0 /* VibeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B4682E8BA6D5002E6EC0 /* VibeResult.swift */; };
+		7BC4B4722E8BA6D5002E6EC0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B46A2E8BA6D5002E6EC0 /* ContentView.swift */; };
+		7BC4B4732E8BA6D5002E6EC0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B46B2E8BA6D5002E6EC0 /* LoadingView.swift */; };
+		7BC4B4742E8BA6D5002E6EC0 /* UserProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4B46D2E8BA6D5002E6EC0 /* UserProfileService.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +96,6 @@
 /* Begin PBXFileReference section */
 		7BC4B3222E8B9BA6002E6EC0 /* on brand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "on brand.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BC4B3252E8B9BA6002E6EC0 /* on_brandApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = on_brandApp.swift; sourceTree = "<group>"; };
-		7BC4B3272E8B9BA6002E6EC0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7BC4B3292E8B9BA9002E6EC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7BC4B32B2E8B9BA9002E6EC0 /* on_brand.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = on_brand.entitlements; sourceTree = "<group>"; };
 		7BC4B32D2E8B9BA9002E6EC0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -45,6 +104,71 @@
 		7BC4B33D2E8B9BAA002E6EC0 /* on brandUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "on brandUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BC4B3412E8B9BAA002E6EC0 /* on_brandUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = on_brandUITests.swift; sourceTree = "<group>"; };
 		7BC4B3432E8B9BAA002E6EC0 /* on_brandUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = on_brandUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7BC4B3E12E8BA696002E6EC0 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		7BC4B3E22E8BA696002E6EC0 /* era.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = era.entitlements; sourceTree = "<group>"; };
+		7BC4B3E32E8BA696002E6EC0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		
+		7BC4B3E52E8BA696002E6EC0 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		
+		7BC4B3EE2E8BA6B5002E6EC0 /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		7BC4B3EF2E8BA6B5002E6EC0 /* EraDesignSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EraDesignSystem.swift; sourceTree = "<group>"; };
+		7BC4B3F52E8BA6C3002E6EC0 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		7BC4B3F82E8BA6C3002E6EC0 /* RecentPhotosSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentPhotosSection.swift; sourceTree = "<group>"; };
+		7BC4B3F92E8BA6C3002E6EC0 /* WelcomeSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeSection.swift; sourceTree = "<group>"; };
+		7BC4B3FA2E8BA6C3002E6EC0 /* QuickActionsSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickActionsSection.swift; sourceTree = "<group>"; };
+		7BC4B3FC2E8BA6C3002E6EC0 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		7BC4B3FF2E8BA6C3002E6EC0 /* AnalyzeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyzeViewModel.swift; sourceTree = "<group>"; };
+		7BC4B4012E8BA6C3002E6EC0 /* PhotoPickerSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPickerSection.swift; sourceTree = "<group>"; };
+		7BC4B4022E8BA6C3002E6EC0 /* PhotoAnalyzerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAnalyzerView.swift; sourceTree = "<group>"; };
+		7BC4B4032E8BA6C3002E6EC0 /* AICurationSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AICurationSection.swift; sourceTree = "<group>"; };
+		7BC4B4052E8BA6C3002E6EC0 /* AIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
+		7BC4B4062E8BA6C3002E6EC0 /* VibeAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VibeAnalyzer.swift; sourceTree = "<group>"; };
+		7BC4B4092E8BA6C3002E6EC0 /* BioSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BioSection.swift; sourceTree = "<group>"; };
+		7BC4B40A2E8BA6C3002E6EC0 /* InstagramTopBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramTopBar.swift; sourceTree = "<group>"; };
+		7BC4B40B2E8BA6C3002E6EC0 /* InstagramActionButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramActionButtons.swift; sourceTree = "<group>"; };
+		7BC4B40C2E8BA6C3002E6EC0 /* InstagramContentTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramContentTabs.swift; sourceTree = "<group>"; };
+		7BC4B40D2E8BA6C3002E6EC0 /* ActionButtonsSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonsSection.swift; sourceTree = "<group>"; };
+		7BC4B40E2E8BA6C3002E6EC0 /* AnalysisCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalysisCard.swift; sourceTree = "<group>"; };
+		7BC4B40F2E8BA6C3002E6EC0 /* InstagramPhotoGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramPhotoGrid.swift; sourceTree = "<group>"; };
+		7BC4B4102E8BA6C3002E6EC0 /* InstagramProfileHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramProfileHeader.swift; sourceTree = "<group>"; };
+		7BC4B4112E8BA6C3002E6EC0 /* ContentTabsSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTabsSection.swift; sourceTree = "<group>"; };
+		7BC4B4122E8BA6C3002E6EC0 /* ProfileHeaderSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderSection.swift; sourceTree = "<group>"; };
+		7BC4B4132E8BA6C3002E6EC0 /* PhotoGridSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoGridSection.swift; sourceTree = "<group>"; };
+		7BC4B4152E8BA6C3002E6EC0 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		7BC4B4162E8BA6C3002E6EC0 /* InstagramProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramProfileView.swift; sourceTree = "<group>"; };
+		7BC4B4192E8BA6C3002E6EC0 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7BC4B41A2E8BA6C3002E6EC0 /* LoginLoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginLoadingOverlay.swift; sourceTree = "<group>"; };
+		7BC4B41B2E8BA6C3002E6EC0 /* AppleSignInButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleSignInButton.swift; sourceTree = "<group>"; };
+		7BC4B41D2E8BA6C3002E6EC0 /* AuthenticationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
+		7BC4B4202E8BA6C3002E6EC0 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		7BC4B4222E8BA6C3002E6EC0 /* OnboardingQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingQuestions.swift; sourceTree = "<group>"; };
+		7BC4B4232E8BA6C3002E6EC0 /* QuizModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizModels.swift; sourceTree = "<group>"; };
+		7BC4B4242E8BA6C3002E6EC0 /* OnboardingScreenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingScreenModel.swift; sourceTree = "<group>"; };
+		7BC4B4262E8BA6C3002E6EC0 /* OnboardingQuestionScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingQuestionScreen.swift; sourceTree = "<group>"; };
+		7BC4B4272E8BA6C3002E6EC0 /* OnboardingProgressHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingProgressHeader.swift; sourceTree = "<group>"; };
+		7BC4B4282E8BA6C3002E6EC0 /* OnboardingProgressGraphScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingProgressGraphScreen.swift; sourceTree = "<group>"; };
+		7BC4B4292E8BA6C3002E6EC0 /* GenderSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderSelectionView.swift; sourceTree = "<group>"; };
+		7BC4B42A2E8BA6C3002E6EC0 /* OnboardingPermissionScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionScreen.swift; sourceTree = "<group>"; };
+		7BC4B42B2E8BA6C3002E6EC0 /* OnboardingChecklistScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingChecklistScreen.swift; sourceTree = "<group>"; };
+		7BC4B42C2E8BA6C3002E6EC0 /* OnboardingSummaryScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryScreen.swift; sourceTree = "<group>"; };
+		7BC4B42D2E8BA6C3002E6EC0 /* NameInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameInputView.swift; sourceTree = "<group>"; };
+		7BC4B42E2E8BA6C3002E6EC0 /* OnboardingWelcomeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeScreen.swift; sourceTree = "<group>"; };
+		7BC4B42F2E8BA6C3002E6EC0 /* OnboardingProgressTrackingScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingProgressTrackingScreen.swift; sourceTree = "<group>"; };
+		7BC4B4302E8BA6C3002E6EC0 /* OnboardingProblemScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingProblemScreen.swift; sourceTree = "<group>"; };
+		7BC4B4312E8BA6C3002E6EC0 /* OnboardingPlanScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingPlanScreen.swift; sourceTree = "<group>"; };
+		7BC4B4322E8BA6C3002E6EC0 /* OnboardingHeroScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingHeroScreen.swift; sourceTree = "<group>"; };
+		7BC4B4342E8BA6C3002E6EC0 /* OnboardingQuestionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingQuestionView.swift; sourceTree = "<group>"; };
+		7BC4B4652E8BA6D5002E6EC0 /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		7BC4B4662E8BA6D5002E6EC0 /* Archetype.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Archetype.swift; sourceTree = "<group>"; };
+		7BC4B4672E8BA6D5002E6EC0 /* AIPromptModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIPromptModels.swift; sourceTree = "<group>"; };
+		7BC4B4682E8BA6D5002E6EC0 /* VibeResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VibeResult.swift; sourceTree = "<group>"; };
+		7BC4B46A2E8BA6D5002E6EC0 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7BC4B46B2E8BA6D5002E6EC0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		7BC4B46D2E8BA6D5002E6EC0 /* UserProfileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileService.swift; sourceTree = "<group>"; };
+
+		7BC4B4802E8BA76C002E6EC0 /* on_brand.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = on_brand.entitlements; sourceTree = "<group>"; };
+
+		7BC4B48F2E8BAB55002E6EC0 /* .cursorrules */ = {isa = PBXFileReference; lastKnownFileType = text; name = .cursorrules; path = ../../era/.cursorrules; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +219,17 @@
 		7BC4B3242E8B9BA6002E6EC0 /* on brand */ = {
 			isa = PBXGroup;
 			children = (
+				7BC4B48F2E8BAB55002E6EC0 /* .cursorrules */,
+				7BC4B4852E8BA7F4002E6EC0 /* Preview Content */,
+				
+				7BC4B4802E8BA76C002E6EC0 /* on_brand.entitlements */,
+				7BC4B4752E8BA6E4002E6EC0 /* Tests */,
+				7BC4B4632E8BA6D5002E6EC0 /* Shared */,
+				7BC4B3F22E8BA6C3002E6EC0 /* Features */,
+				7BC4B3EC2E8BA6B5002E6EC0 /* Core */,
+				
+				7BC4B3E02E8BA696002E6EC0 /* App */,
 				7BC4B3252E8B9BA6002E6EC0 /* on_brandApp.swift */,
-				7BC4B3272E8B9BA6002E6EC0 /* ContentView.swift */,
 				7BC4B3292E8B9BA9002E6EC0 /* Assets.xcassets */,
 				7BC4B32B2E8B9BA9002E6EC0 /* on_brand.entitlements */,
 				7BC4B32C2E8B9BA9002E6EC0 /* Preview Content */,
@@ -127,6 +260,319 @@
 				7BC4B3432E8B9BAA002E6EC0 /* on_brandUITestsLaunchTests.swift */,
 			);
 			path = "on brandUITests";
+			sourceTree = "<group>";
+		};
+		7BC4B3E02E8BA696002E6EC0 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3E12E8BA696002E6EC0 /* Secrets.xcconfig */,
+				7BC4B3E22E8BA696002E6EC0 /* era.entitlements */,
+				7BC4B3E32E8BA696002E6EC0 /* AppDelegate.swift */,
+				
+				7BC4B3E52E8BA696002E6EC0 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		7BC4B3EC2E8BA6B5002E6EC0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3ED2E8BA6B5002E6EC0 /* DesignSystem */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		7BC4B3ED2E8BA6B5002E6EC0 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3EE2E8BA6B5002E6EC0 /* ThemeManager.swift */,
+				7BC4B3EF2E8BA6B5002E6EC0 /* EraDesignSystem.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		7BC4B3F22E8BA6C3002E6EC0 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3F32E8BA6C3002E6EC0 /* Settings */,
+				7BC4B3F62E8BA6C3002E6EC0 /* Home */,
+				7BC4B3FD2E8BA6C3002E6EC0 /* PhotoAnalysis */,
+				7BC4B4072E8BA6C3002E6EC0 /* Profile */,
+				7BC4B4172E8BA6C3002E6EC0 /* Authentication */,
+				7BC4B41E2E8BA6C3002E6EC0 /* Onboarding */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		7BC4B3F32E8BA6C3002E6EC0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3F42E8BA6C3002E6EC0 /* Views */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		7BC4B3F42E8BA6C3002E6EC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3F52E8BA6C3002E6EC0 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7BC4B3F62E8BA6C3002E6EC0 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3F72E8BA6C3002E6EC0 /* Components */,
+				7BC4B3FB2E8BA6C3002E6EC0 /* Views */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		7BC4B3F72E8BA6C3002E6EC0 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3F82E8BA6C3002E6EC0 /* RecentPhotosSection.swift */,
+				7BC4B3F92E8BA6C3002E6EC0 /* WelcomeSection.swift */,
+				7BC4B3FA2E8BA6C3002E6EC0 /* QuickActionsSection.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7BC4B3FB2E8BA6C3002E6EC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3FC2E8BA6C3002E6EC0 /* HomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7BC4B3FD2E8BA6C3002E6EC0 /* PhotoAnalysis */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3FE2E8BA6C3002E6EC0 /* ViewModels */,
+				7BC4B4002E8BA6C3002E6EC0 /* Views */,
+				7BC4B4042E8BA6C3002E6EC0 /* Services */,
+			);
+			path = PhotoAnalysis;
+			sourceTree = "<group>";
+		};
+		7BC4B3FE2E8BA6C3002E6EC0 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B3FF2E8BA6C3002E6EC0 /* AnalyzeViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		7BC4B4002E8BA6C3002E6EC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4012E8BA6C3002E6EC0 /* PhotoPickerSection.swift */,
+				7BC4B4022E8BA6C3002E6EC0 /* PhotoAnalyzerView.swift */,
+				7BC4B4032E8BA6C3002E6EC0 /* AICurationSection.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7BC4B4042E8BA6C3002E6EC0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4052E8BA6C3002E6EC0 /* AIService.swift */,
+				7BC4B4062E8BA6C3002E6EC0 /* VibeAnalyzer.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7BC4B4072E8BA6C3002E6EC0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4082E8BA6C3002E6EC0 /* Components */,
+				7BC4B4142E8BA6C3002E6EC0 /* Views */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		7BC4B4082E8BA6C3002E6EC0 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4092E8BA6C3002E6EC0 /* BioSection.swift */,
+				7BC4B40A2E8BA6C3002E6EC0 /* InstagramTopBar.swift */,
+				7BC4B40B2E8BA6C3002E6EC0 /* InstagramActionButtons.swift */,
+				7BC4B40C2E8BA6C3002E6EC0 /* InstagramContentTabs.swift */,
+				7BC4B40D2E8BA6C3002E6EC0 /* ActionButtonsSection.swift */,
+				7BC4B40E2E8BA6C3002E6EC0 /* AnalysisCard.swift */,
+				7BC4B40F2E8BA6C3002E6EC0 /* InstagramPhotoGrid.swift */,
+				7BC4B4102E8BA6C3002E6EC0 /* InstagramProfileHeader.swift */,
+				7BC4B4112E8BA6C3002E6EC0 /* ContentTabsSection.swift */,
+				7BC4B4122E8BA6C3002E6EC0 /* ProfileHeaderSection.swift */,
+				7BC4B4132E8BA6C3002E6EC0 /* PhotoGridSection.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7BC4B4142E8BA6C3002E6EC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4152E8BA6C3002E6EC0 /* ProfileView.swift */,
+				7BC4B4162E8BA6C3002E6EC0 /* InstagramProfileView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7BC4B4172E8BA6C3002E6EC0 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4182E8BA6C3002E6EC0 /* Views */,
+				7BC4B41C2E8BA6C3002E6EC0 /* Services */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		7BC4B4182E8BA6C3002E6EC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4192E8BA6C3002E6EC0 /* LoginView.swift */,
+				7BC4B41A2E8BA6C3002E6EC0 /* LoginLoadingOverlay.swift */,
+				7BC4B41B2E8BA6C3002E6EC0 /* AppleSignInButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7BC4B41C2E8BA6C3002E6EC0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B41D2E8BA6C3002E6EC0 /* AuthenticationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7BC4B41E2E8BA6C3002E6EC0 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B41F2E8BA6C3002E6EC0 /* ViewModels */,
+				7BC4B4212E8BA6C3002E6EC0 /* Models */,
+				7BC4B4252E8BA6C3002E6EC0 /* Components */,
+				7BC4B4332E8BA6C3002E6EC0 /* Views */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		7BC4B41F2E8BA6C3002E6EC0 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4202E8BA6C3002E6EC0 /* OnboardingViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		7BC4B4212E8BA6C3002E6EC0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4222E8BA6C3002E6EC0 /* OnboardingQuestions.swift */,
+				7BC4B4232E8BA6C3002E6EC0 /* QuizModels.swift */,
+				7BC4B4242E8BA6C3002E6EC0 /* OnboardingScreenModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7BC4B4252E8BA6C3002E6EC0 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4262E8BA6C3002E6EC0 /* OnboardingQuestionScreen.swift */,
+				7BC4B4272E8BA6C3002E6EC0 /* OnboardingProgressHeader.swift */,
+				7BC4B4282E8BA6C3002E6EC0 /* OnboardingProgressGraphScreen.swift */,
+				7BC4B4292E8BA6C3002E6EC0 /* GenderSelectionView.swift */,
+				7BC4B42A2E8BA6C3002E6EC0 /* OnboardingPermissionScreen.swift */,
+				7BC4B42B2E8BA6C3002E6EC0 /* OnboardingChecklistScreen.swift */,
+				7BC4B42C2E8BA6C3002E6EC0 /* OnboardingSummaryScreen.swift */,
+				7BC4B42D2E8BA6C3002E6EC0 /* NameInputView.swift */,
+				7BC4B42E2E8BA6C3002E6EC0 /* OnboardingWelcomeScreen.swift */,
+				7BC4B42F2E8BA6C3002E6EC0 /* OnboardingProgressTrackingScreen.swift */,
+				7BC4B4302E8BA6C3002E6EC0 /* OnboardingProblemScreen.swift */,
+				7BC4B4312E8BA6C3002E6EC0 /* OnboardingPlanScreen.swift */,
+				7BC4B4322E8BA6C3002E6EC0 /* OnboardingHeroScreen.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7BC4B4332E8BA6C3002E6EC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4342E8BA6C3002E6EC0 /* OnboardingQuestionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7BC4B4632E8BA6D5002E6EC0 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4642E8BA6D5002E6EC0 /* Models */,
+				7BC4B4692E8BA6D5002E6EC0 /* Views */,
+				7BC4B46C2E8BA6D5002E6EC0 /* Services */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		7BC4B4642E8BA6D5002E6EC0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4652E8BA6D5002E6EC0 /* UserProfile.swift */,
+				7BC4B4662E8BA6D5002E6EC0 /* Archetype.swift */,
+				7BC4B4672E8BA6D5002E6EC0 /* AIPromptModels.swift */,
+				7BC4B4682E8BA6D5002E6EC0 /* VibeResult.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7BC4B4692E8BA6D5002E6EC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B46A2E8BA6D5002E6EC0 /* ContentView.swift */,
+				7BC4B46B2E8BA6D5002E6EC0 /* LoadingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7BC4B46C2E8BA6D5002E6EC0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B46D2E8BA6D5002E6EC0 /* UserProfileService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7BC4B4752E8BA6E4002E6EC0 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4B4762E8BA6E4002E6EC0 /* UITests */,
+				7BC4B4792E8BA6E4002E6EC0 /* UnitTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		7BC4B4762E8BA6E4002E6EC0 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		7BC4B4792E8BA6E4002E6EC0 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		7BC4B4852E8BA7F4002E6EC0 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,8 +679,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				
 				7BC4B32E2E8B9BA9002E6EC0 /* Preview Assets.xcassets in Resources */,
 				7BC4B32A2E8B9BA9002E6EC0 /* Assets.xcassets in Resources */,
+				7BC4B3E62E8BA696002E6EC0 /* Secrets.xcconfig in Resources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,8 +708,67 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BC4B3282E8B9BA6002E6EC0 /* ContentView.swift in Sources */,
+
+				7BC4B4542E8BA6C4002E6EC0 /* OnboardingScreenModel.swift in Sources */,
+				7BC4B45B2E8BA6C4002E6EC0 /* OnboardingSummaryScreen.swift in Sources */,
+				7BC4B43B2E8BA6C3002E6EC0 /* PhotoPickerSection.swift in Sources */,
+				7BC4B4462E8BA6C4002E6EC0 /* InstagramPhotoGrid.swift in Sources */,
+				7BC4B4442E8BA6C3002E6EC0 /* ActionButtonsSection.swift in Sources */,
+				7BC4B4602E8BA6C4002E6EC0 /* OnboardingPlanScreen.swift in Sources */,
+				7BC4B43C2E8BA6C3002E6EC0 /* PhotoAnalyzerView.swift in Sources */,
+				7BC4B4492E8BA6C4002E6EC0 /* ProfileHeaderSection.swift in Sources */,
+				7BC4B4722E8BA6D5002E6EC0 /* ContentView.swift in Sources */,
+				7BC4B4512E8BA6C4002E6EC0 /* OnboardingViewModel.swift in Sources */,
+				7BC4B45C2E8BA6C4002E6EC0 /* NameInputView.swift in Sources */,
+				7BC4B45A2E8BA6C4002E6EC0 /* OnboardingChecklistScreen.swift in Sources */,
+				7BC4B4422E8BA6C3002E6EC0 /* InstagramActionButtons.swift in Sources */,
+				7BC4B44A2E8BA6C4002E6EC0 /* PhotoGridSection.swift in Sources */,
+				
+				7BC4B4702E8BA6D5002E6EC0 /* AIPromptModels.swift in Sources */,
+				7BC4B4622E8BA6C4002E6EC0 /* OnboardingQuestionView.swift in Sources */,
+				7BC4B44F2E8BA6C4002E6EC0 /* AppleSignInButton.swift in Sources */,
+				7BC4B4562E8BA6C4002E6EC0 /* OnboardingProgressHeader.swift in Sources */,
+				7BC4B46E2E8BA6D5002E6EC0 /* UserProfile.swift in Sources */,
+				7BC4B4592E8BA6C4002E6EC0 /* OnboardingPermissionScreen.swift in Sources */,
+				7BC4B4552E8BA6C4002E6EC0 /* OnboardingQuestionScreen.swift in Sources */,
+				7BC4B4352E8BA6C3002E6EC0 /* SettingsView.swift in Sources */,
+				7BC4B4572E8BA6C4002E6EC0 /* OnboardingProgressGraphScreen.swift in Sources */,
+				7BC4B4472E8BA6C4002E6EC0 /* InstagramProfileHeader.swift in Sources */,
+				7BC4B43A2E8BA6C3002E6EC0 /* AnalyzeViewModel.swift in Sources */,
+				7BC4B4732E8BA6D5002E6EC0 /* LoadingView.swift in Sources */,
+				7BC4B4612E8BA6C4002E6EC0 /* OnboardingHeroScreen.swift in Sources */,
+				7BC4B45D2E8BA6C4002E6EC0 /* OnboardingWelcomeScreen.swift in Sources */,
+				7BC4B3E72E8BA696002E6EC0 /* AppDelegate.swift in Sources */,
+				7BC4B44B2E8BA6C4002E6EC0 /* ProfileView.swift in Sources */,
+				7BC4B4502E8BA6C4002E6EC0 /* AuthenticationService.swift in Sources */,
+				7BC4B43E2E8BA6C3002E6EC0 /* AIService.swift in Sources */,
+				7BC4B4742E8BA6D5002E6EC0 /* UserProfileService.swift in Sources */,
+				7BC4B44E2E8BA6C4002E6EC0 /* LoginLoadingOverlay.swift in Sources */,
+				7BC4B43F2E8BA6C3002E6EC0 /* VibeAnalyzer.swift in Sources */,
+				7BC4B4522E8BA6C4002E6EC0 /* OnboardingQuestions.swift in Sources */,
+				7BC4B4432E8BA6C3002E6EC0 /* InstagramContentTabs.swift in Sources */,
+				7BC4B4482E8BA6C4002E6EC0 /* ContentTabsSection.swift in Sources */,
+				7BC4B4382E8BA6C3002E6EC0 /* QuickActionsSection.swift in Sources */,
+				7BC4B4532E8BA6C4002E6EC0 /* QuizModels.swift in Sources */,
+				
+				7BC4B3F02E8BA6B5002E6EC0 /* ThemeManager.swift in Sources */,
+				7BC4B4402E8BA6C3002E6EC0 /* BioSection.swift in Sources */,
+				7BC4B4582E8BA6C4002E6EC0 /* GenderSelectionView.swift in Sources */,
+				7BC4B4392E8BA6C3002E6EC0 /* HomeView.swift in Sources */,
+				7BC4B4452E8BA6C3002E6EC0 /* AnalysisCard.swift in Sources */,
+				7BC4B44D2E8BA6C4002E6EC0 /* LoginView.swift in Sources */,
 				7BC4B3262E8B9BA6002E6EC0 /* on_brandApp.swift in Sources */,
+				7BC4B43D2E8BA6C3002E6EC0 /* AICurationSection.swift in Sources */,
+				7BC4B46F2E8BA6D5002E6EC0 /* Archetype.swift in Sources */,
+				7BC4B3E92E8BA696002E6EC0 /* SceneDelegate.swift in Sources */,
+				7BC4B4712E8BA6D5002E6EC0 /* VibeResult.swift in Sources */,
+				7BC4B45F2E8BA6C4002E6EC0 /* OnboardingProblemScreen.swift in Sources */,
+				7BC4B44C2E8BA6C4002E6EC0 /* InstagramProfileView.swift in Sources */,
+				7BC4B3F12E8BA6B5002E6EC0 /* EraDesignSystem.swift in Sources */,
+				7BC4B45E2E8BA6C4002E6EC0 /* OnboardingProgressTrackingScreen.swift in Sources */,
+				7BC4B4412E8BA6C3002E6EC0 /* InstagramTopBar.swift in Sources */,
+				7BC4B4362E8BA6C3002E6EC0 /* RecentPhotosSection.swift in Sources */,
+				7BC4B4372E8BA6C3002E6EC0 /* WelcomeSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

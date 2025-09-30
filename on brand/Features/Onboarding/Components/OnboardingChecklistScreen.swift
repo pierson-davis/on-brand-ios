@@ -43,7 +43,7 @@ struct OnboardingChecklistScreen: View {
                             
                             if row.id != items.last?.id {
                                 Divider()
-                                    .background(Color.black.opacity(0.05))
+                                    .background(themeManager.colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.05))
                             }
                         }
                     }

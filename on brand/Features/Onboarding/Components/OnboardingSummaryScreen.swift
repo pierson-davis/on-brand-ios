@@ -57,7 +57,7 @@ struct OnboardingSummaryScreen: View {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack(spacing: 12) {
                                 Image(systemName: "sparkles")
-                                    .foregroundColor(.purple)
+                                    .foregroundColor(themeManager.accent)
                                 Text("AI-powered style analysis")
                                     .font(.subheadline)
                                     .foregroundColor(themeManager.textPrimary)
@@ -65,7 +65,7 @@ struct OnboardingSummaryScreen: View {
                             
                             HStack(spacing: 12) {
                                 Image(systemName: "camera")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(themeManager.primary)
                                 Text("Smart photo curation")
                                     .font(.subheadline)
                                     .foregroundColor(themeManager.textPrimary)
@@ -73,7 +73,7 @@ struct OnboardingSummaryScreen: View {
                             
                             HStack(spacing: 12) {
                                 Image(systemName: "chart.line.uptrend.xyaxis")
-                                    .foregroundColor(.green)
+                                    .foregroundColor(themeManager.secondary)
                                 Text("Progress tracking")
                                     .font(.subheadline)
                                     .foregroundColor(themeManager.textPrimary)

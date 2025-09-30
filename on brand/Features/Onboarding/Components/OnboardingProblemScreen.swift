@@ -30,7 +30,7 @@ struct OnboardingProblemScreen: View {
                     VStack(spacing: 16) {
                         Image(systemName: image)
                             .font(.system(size: 60))
-                            .foregroundColor(.red.opacity(0.7))
+                            .foregroundColor(themeManager.colorScheme == .dark ? Color.red.opacity(0.9) : Color.red.opacity(0.7))
                         
                         Text("The Problem")
                             .font(.headline)
@@ -40,10 +40,10 @@ struct OnboardingProblemScreen: View {
                     .padding(.vertical, 32)
                     .background(
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.red.opacity(0.05))
+                            .fill(themeManager.colorScheme == .dark ? Color.red.opacity(0.15) : Color.red.opacity(0.05))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.red.opacity(0.1), lineWidth: 1)
+                                    .stroke(themeManager.colorScheme == .dark ? Color.red.opacity(0.3) : Color.red.opacity(0.1), lineWidth: 1)
                             )
                     )
                     
@@ -56,7 +56,7 @@ struct OnboardingProblemScreen: View {
                             
                             HStack(spacing: 12) {
                                 Image(systemName: "exclamationmark.triangle.fill")
-                                    .foregroundColor(.orange)
+                                    .foregroundColor(themeManager.colorScheme == .dark ? Color.orange.opacity(0.9) : Color.orange)
                                 Text("Sound familiar? You're not alone.")
                                     .font(.caption)
                                     .foregroundColor(themeManager.textSecondary)

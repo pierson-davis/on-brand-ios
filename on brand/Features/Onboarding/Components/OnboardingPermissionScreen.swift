@@ -57,7 +57,7 @@ struct OnboardingPermissionScreen: View {
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack(spacing: 12) {
                                     Image(systemName: "photo.stack")
-                                        .foregroundColor(.blue)
+                                        .foregroundColor(themeManager.primary)
                                     Text("Analyze your photo library")
                                         .font(.subheadline)
                                         .foregroundColor(themeManager.textPrimary)
@@ -65,7 +65,7 @@ struct OnboardingPermissionScreen: View {
                                 
                                 HStack(spacing: 12) {
                                     Image(systemName: "sparkles")
-                                        .foregroundColor(.purple)
+                                        .foregroundColor(themeManager.accent)
                                     Text("Create personalized recommendations")
                                         .font(.subheadline)
                                         .foregroundColor(themeManager.textPrimary)
@@ -73,7 +73,7 @@ struct OnboardingPermissionScreen: View {
                                 
                                 HStack(spacing: 12) {
                                     Image(systemName: "chart.line.uptrend.xyaxis")
-                                        .foregroundColor(.green)
+                                        .foregroundColor(themeManager.secondary)
                                     Text("Track your style evolution")
                                         .font(.subheadline)
                                         .foregroundColor(themeManager.textPrimary)
@@ -87,11 +87,11 @@ struct OnboardingPermissionScreen: View {
                     VStack(spacing: 8) {
                         HStack(spacing: 8) {
                             Image(systemName: "lock.shield")
-                                .foregroundColor(.green)
+                                .foregroundColor(themeManager.secondary)
                                 .font(.caption)
                             Text("Your photos stay private")
                                 .font(.caption)
-                                .foregroundColor(.green)
+                                .foregroundColor(themeManager.secondary)
                         }
                         
                             Text("We only analyze photos you specifically select. Your privacy is our priority.")
@@ -103,7 +103,7 @@ struct OnboardingPermissionScreen: View {
                     .padding(.vertical, 12)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.green.opacity(0.1))
+                            .fill(themeManager.colorScheme == .dark ? themeManager.secondary.opacity(0.15) : themeManager.secondary.opacity(0.1))
                     )
                 }
                 
