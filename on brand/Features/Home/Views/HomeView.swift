@@ -26,6 +26,9 @@ struct HomeView: View {
                     homeContent
                         .tag(EraBottomNavigationBar.Tab.home)
                     
+                    dealsContent
+                        .tag(EraBottomNavigationBar.Tab.deals)
+                    
                     profileContent
                         .tag(EraBottomNavigationBar.Tab.profile)
                 }
@@ -92,6 +95,11 @@ struct HomeView: View {
         }
     }
     
+    
+    private var dealsContent: some View {
+        CreatorRequirementsView()
+            .environmentObject(themeManager)
+    }
     
     private var profileContent: some View {
         Group {

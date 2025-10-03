@@ -119,7 +119,7 @@ struct OnboardingPermissionScreen: View {
         }
     }
     
-    private func iconForPermission(_ permission: OnboardingScreen.PermissionType) -> String {
+    private func iconForPermission(_ permission: PermissionType) -> String {
         switch permission {
         case .photoAccess:
             return "photo.on.rectangle"
@@ -132,7 +132,7 @@ struct OnboardingPermissionScreen: View {
         }
     }
     
-    private func permissionTitleForPermission(_ permission: OnboardingScreen.PermissionType) -> String {
+    private func permissionTitleForPermission(_ permission: PermissionType) -> String {
         switch permission {
         case .photoAccess:
             return "Photo Access"

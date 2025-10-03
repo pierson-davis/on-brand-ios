@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+// import FirebaseAuth
+// import FirebaseCore
 
 @MainActor
 class OnboardingViewModel: ObservableObject {
@@ -45,15 +47,28 @@ class OnboardingViewModel: ObservableObject {
         self.questionIndexMap = Dictionary(uniqueKeysWithValues: questions.enumerated().map { ($0.element.id, $0.offset) })
         self.screens = [] // Will be loaded lazily
         
-        // Load stored name from Apple Sign-In if available
-        if let storedName = UserDefaults.standard.string(forKey: "user_full_name") {
+        // Load user name from UserDefaults (Firebase disabled for now)
+        if let storedName = UserDefaults.standard.string(forKey: "user_full_name"), !storedName.isEmpty {
             self.userName = storedName
+            print("🔥 OnboardingViewModel: Loaded name from UserDefaults: \(storedName)")
         }
     }
     
     // Clear screen cache when userName changes to rebuild screens with correct name input requirement
     func clearScreenCache() {
         _screens = nil
+    }
+    
+    // Refresh user name from UserDefaults (Firebase disabled for now)
+    func refreshUserNameFromUserDefaults() {
+        if let storedName = UserDefaults.standard.string(forKey: "user_full_name"), !storedName.isEmpty {
+            if self.userName != storedName {
+                self.userName = storedName
+                print("🔥 OnboardingViewModel: Updated name from UserDefaults: \(storedName)")
+                // Clear screen cache to rebuild with new name
+                clearScreenCache()
+            }
+        }
     }
 
     var currentScreen: OnboardingScreen? {
@@ -124,10 +139,22 @@ class OnboardingViewModel: ObservableObject {
         userName = ""
         primaryArchetype = nil
         secondaryArchetype = nil
+        
+        // Clear screen cache to force rebuild
+        clearScreenCache()
+        
+        // Refresh user name from UserDefaults after reset
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.refreshUserNameFromUserDefaults()
+        }
     }
 
     func completeOnboarding() {
         calculateResults()
+        
+        // TODO: Save onboarding data to Firebase
+        // This will be implemented after adding FirebaseOnboardingService to Xcode project
+        
         finished = true
     }
 

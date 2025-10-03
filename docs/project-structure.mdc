@@ -1,0 +1,67 @@
+# Project Structure & Architecture
+
+## App Overview
+The "on brand" app is a SwiftUI-based iOS application that migrated from the "era" app. It's an AI-powered style and photo analysis app with Instagram-style UI components.
+
+## Core Architecture
+- **Pattern**: MVVM (Model-View-ViewModel) with SwiftUI
+- **Entry Point**: [on_brandApp.swift](mdc:on brand/on_brandApp.swift) - Main app structure with ThemeManager environment object
+- **Main Content**: [ContentView.swift](mdc:on brand/Shared/Views/ContentView.swift) - Complex navigation with authentication flow
+- **Design System**: [EraDesignSystem.swift](mdc:on brand/Core/DesignSystem/EraDesignSystem.swift) & [ThemeManager.swift](mdc:on brand/Core/DesignSystem/ThemeManager.swift)
+
+## Directory Structure
+
+### Core Infrastructure
+- **App Entry**: `on brand/on_brandApp.swift` - App lifecycle and environment setup
+- **Scene Management**: `App/AppDelegate.swift` & `App/SceneDelegate.swift` - iOS lifecycle management
+- **Design System**: `Core/DesignSystem/` - Complete theming and UI components
+- **Shared Models**: `Shared/Models/` - Core data models and services
+
+### Feature Modules
+Each feature follows a consistent structure:
+```
+Features/[FeatureName]/
+├── Models/          # Data models specific to the feature
+├── Services/        # Business logic and API services
+├── ViewModels/      # MVVM view models
+├── Views/           # SwiftUI views
+└── Components/      # Reusable UI components
+```
+
+### Key Features
+- **Authentication**: Apple Sign-In integration
+- **Onboarding**: 18-screen comprehensive flow with quiz system
+- **Photo Analysis**: AI-powered image curation and vibe matching
+- **Profile Management**: Instagram-style profile view
+- **Home Dashboard**: Quick actions and recent photos
+- **Settings**: Theme management and app configuration
+- **Developer Tools**: Debug dashboard and testing utilities
+
+## File Naming Conventions
+- **Views**: PascalCase with descriptive names (e.g., `OnboardingWelcomeScreen.swift`)
+- **Models**: PascalCase with "Model" suffix when needed (e.g., `UserProfile.swift`)
+- **Services**: PascalCase with "Service" suffix (e.g., `AuthenticationService.swift`)
+- **Components**: PascalCase with descriptive names (e.g., `EraButtons.swift`)
+
+## Import Organization
+1. System frameworks (SwiftUI, Foundation, etc.)
+2. Third-party libraries
+3. Local project imports (grouped by feature)
+
+## Environment Objects
+- **ThemeManager**: Always injected at app level via `.environmentObject(ThemeManager.shared)`
+- **UserProfileService**: Singleton service for profile management
+- **AuthenticationService**: Handles Apple Sign-In integration
+
+## Navigation Patterns
+- **NavigationStack**: Used for main app navigation
+- **NavigationDestination**: For programmatic navigation with typed routes
+- **TabView**: For bottom navigation in main app areas
+- **Sheet/FullScreenCover**: For modal presentations
+
+## State Management
+- **@State**: Local view state
+- **@StateObject**: View-owned observable objects
+- **@ObservedObject**: External observable objects
+- **@EnvironmentObject**: App-wide shared objects (ThemeManager)
+- **@Published**: Observable properties in classes

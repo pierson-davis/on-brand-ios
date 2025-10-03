@@ -1,0 +1,199 @@
+# SwiftUI Coding Standards & Patterns
+
+## SwiftUI View Structure
+
+### View Body Organization
+```swift
+struct ExampleView: View {
+    // MARK: - Properties
+    @State private var localState = ""
+    @StateObject private var viewModel = ExampleViewModel()
+    @ObservedObject private var service = ExampleService.shared
+    @EnvironmentObject private var themeManager: ThemeManager
+    
+    // MARK: - Body
+    var body: some View {
+        // View implementation
+    }
+    
+    // MARK: - Private Methods
+    private func privateMethod() {
+        // Implementation
+    }
+}
+```
+
+### Property Wrappers Usage
+- **@State**: For local view state that doesn't need to persist
+- **@StateObject**: For view-owned ObservableObject instances
+- **@ObservedObject**: For external ObservableObject instances
+- **@EnvironmentObject**: For app-wide shared objects (always use ThemeManager)
+- **@Published**: In ObservableObject classes for reactive properties
+
+### View Modifiers Order
+1. Layout modifiers (frame, padding, spacing)
+2. Visual modifiers (background, foregroundColor, font)
+3. Interactive modifiers (onTapGesture, onAppear)
+4. Navigation modifiers (navigationTitle, toolbar)
+
+## Naming Conventions
+
+### View Names
+- Use descriptive, action-oriented names
+- End with "View" for SwiftUI views
+- Use "Screen" for full-screen views
+- Use "Component" for reusable UI elements
+
+Examples:
+- `OnboardingWelcomeScreen` ✅
+- `ProfileHeaderComponent` ✅
+- `PhotoAnalysisView` ✅
+- `View` ❌ (too generic)
+
+### Variable Names
+- Use camelCase for variables and functions
+- Use descriptive names that explain purpose
+- Prefix private properties with underscore for clarity
+
+Examples:
+- `isAuthenticated` ✅
+- `hasCompletedOnboarding` ✅
+- `showError` ✅
+- `var a: Bool` ❌ (not descriptive)
+
+## Code Organization
+
+### MARK Comments
+Use MARK comments to organize code sections:
+```swift
+// MARK: - Properties
+// MARK: - Body
+// MARK: - Private Methods
+// MARK: - Public Methods
+// MARK: - Computed Properties
+```
+
+### Function Organization
+1. Computed properties (var body, var someView)
+2. Public methods
+3. Private methods
+4. Helper methods
+
+### Spacing and Formatting
+- Use 4 spaces for indentation
+- Add blank lines between logical sections
+- Group related properties together
+- Use trailing closures for modifiers
+
+## SwiftUI Best Practices
+
+### View Composition
+- Break complex views into smaller, focused components
+- Use computed properties for complex view logic
+- Extract reusable components to separate files
+
+### State Management
+- Keep state as local as possible
+- Use @StateObject for view-owned state
+- Pass data down through initializers
+- Use @EnvironmentObject for app-wide state
+
+### Performance
+- Use `@State` for simple local state
+- Use `@StateObject` for complex state management
+- Avoid creating objects in view body
+- Use `LazyVStack`/`LazyHStack` for large lists
+
+### Error Handling
+- Use `@State` for error states
+- Show user-friendly error messages
+- Provide retry mechanisms
+- Log errors for debugging
+
+## Common Patterns
+
+### Loading States
+```swift
+@State private var isLoading = false
+
+var body: some View {
+    ZStack {
+        mainContent
+        
+        if isLoading {
+            LoadingView()
+        }
+    }
+}
+```
+
+### Error Handling
+```swift
+@State private var showError = false
+@State private var errorMessage = ""
+
+var body: some View {
+    // Main content
+    .alert("Error", isPresented: $showError) {
+        Button("OK") { showError = false }
+    } message: {
+        Text(errorMessage)
+    }
+}
+```
+
+### Navigation
+```swift
+@State private var path: [AppRoute] = []
+
+NavigationStack(path: $path) {
+    // Content
+}
+.navigationDestination(for: AppRoute.self) { route in
+    switch route {
+    case .detail(let item):
+        DetailView(item: item)
+    }
+}
+```
+
+## Animation Guidelines
+
+### Animation Usage
+- Use `.animation()` modifier for smooth transitions
+- Prefer spring animations for natural feel
+- Use `withAnimation` for programmatic animations
+- Keep animations subtle and purposeful
+
+### Common Animations
+```swift
+.animation(.easeInOut(duration: 0.3), value: isVisible)
+.animation(.spring(response: 0.5, dampingFraction: 0.8), value: isExpanded)
+.transition(.opacity.combined(with: .scale(scale: 0.9)))
+```
+
+## Accessibility
+
+### Accessibility Labels
+- Add `.accessibilityLabel()` for custom views
+- Use `.accessibilityHint()` for interactive elements
+- Group related elements with `.accessibilityElement()`
+
+### VoiceOver Support
+- Ensure all interactive elements are accessible
+- Provide meaningful labels for images
+- Test with VoiceOver enabled
+
+## Memory Management
+
+### ObservableObject Lifecycle
+- Use `@StateObject` for view-owned objects
+- Use `@ObservedObject` for shared objects
+- Avoid creating objects in view body
+- Use weak references when appropriate
+
+### View Lifecycle
+- Use `.onAppear` for setup
+- Use `.onDisappear` for cleanup
+- Avoid heavy operations in view body
+- Use `Task` for async operations

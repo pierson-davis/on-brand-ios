@@ -209,31 +209,8 @@ class ThemeManager: ObservableObject {
         colorScheme == .dark ? Color.white : Color.black
     }
     
-    // Background decorations
-    var backgroundDecorations: [BackgroundDecoration] {
-        let baseOpacity = colorScheme == .dark ? 0.08 : 0.15
-        
-        return [
-            BackgroundDecoration(
-                color: secondary,
-                size: 420,
-                offset: CGPoint(x: -140, y: -220),
-                opacity: baseOpacity
-            ),
-            BackgroundDecoration(
-                color: accent,
-                size: 360,
-                offset: CGPoint(x: 160, y: -260),
-                opacity: baseOpacity + 0.03
-            ),
-            BackgroundDecoration(
-                color: primary,
-                size: 420,
-                offset: CGPoint(x: 120, y: 320),
-                opacity: baseOpacity - 0.03
-            )
-        ]
-    }
+    // MARK: - Background Decorations
+    // This property has been moved to ThemeBackgroundDecorations.swift for better organization
     
     // MARK: - Theme Methods
     func toggleTheme() {
@@ -252,12 +229,8 @@ class ThemeManager: ObservableObject {
     }
 }
 
-struct BackgroundDecoration: Equatable {
-    let color: Color
-    let size: CGFloat
-    let offset: CGPoint
-    let opacity: Double
-}
+// MARK: - BackgroundDecoration
+// This struct has been moved to ThemeBackgroundDecorations.swift for better organization
 
 // MARK: - Environment Key
 struct ThemeManagerKey: EnvironmentKey {

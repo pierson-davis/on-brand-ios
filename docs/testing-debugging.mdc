@@ -1,0 +1,358 @@
+# Testing & Debugging
+
+## Developer Tools
+
+### Developer Dashboard
+The app includes a comprehensive developer dashboard accessible via shake gesture:
+- **Screenshot Generator**: Capture app screenshots
+- **Performance Monitor**: Track app performance metrics
+- **Data Management**: Clear app data and reset state
+- **Theme Tester**: Test different theme configurations
+- **Debug Tools**: Various debugging utilities
+
+### Shake Detection
+```swift
+// Shake gesture toggles developer mode
+.onShake {
+    handleShakeGesture()
+}
+
+// Developer mode state
+@State private var isDeveloperModeEnabled = false
+```
+
+### Developer Mode Access
+1. Shake device to toggle developer mode
+2. Use developer dashboard for debugging
+3. Access various debugging tools
+4. Test different app states
+
+## AI-Enhanced Testing with Devintest
+
+### Automated Code Analysis
+Use devintest tools for comprehensive code testing:
+
+```bash
+# Analyze SwiftUI code for best practices
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review this SwiftUI view for accessibility, performance, and best practices" --provider "anthropic"
+
+# Test error handling implementations
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Validate this error handling code for completeness and user experience" --provider "openai"
+```
+
+### UI/UX Testing with Screenshots
+```bash
+# Capture app screenshots for analysis
+venv/bin/python3 devintest/tools/screenshot_utils.py https://your-app.com screenshot.png --width 375 --height 812
+
+# Analyze UI design with AI
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze this mobile app UI for usability, accessibility, and design consistency" --image screenshot.png --provider "gpt-4o"
+```
+
+### Feature Testing Workflows
+```bash
+# Test AI features with real data
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Test this AI email parsing feature with sample influencer deal emails" --provider "openai"
+
+# Validate data models
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review this data model for completeness and type safety" --provider "anthropic"
+```
+
+### Performance Testing
+```bash
+# Test API response times
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze this API integration for performance bottlenecks" --provider "openai"
+
+# Memory usage analysis
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review this memory management implementation" --provider "anthropic"
+```
+
+## Testing Strategy
+
+### Unit Testing
+- **ViewModels**: Test business logic and state management
+- **Services**: Test API calls and data processing
+- **Models**: Test data validation and transformations
+- **Utilities**: Test helper functions and extensions
+
+### UI Testing
+- **User Flows**: Test complete user journeys
+- **Navigation**: Test all navigation paths
+- **Interactions**: Test user interactions and gestures
+- **Accessibility**: Test with accessibility features enabled
+
+### Integration Testing
+- **API Integration**: Test external service integrations
+- **Data Persistence**: Test data saving and loading
+- **Authentication**: Test sign-in and sign-out flows
+- **Photo Analysis**: Test AI integration
+
+### AI-Enhanced Testing
+- **Code Quality**: Use AI to review code implementations
+- **UI Validation**: Use AI to analyze UI designs
+- **Feature Testing**: Use AI to test feature completeness
+- **Performance Analysis**: Use AI to identify bottlenecks
+
+## Debugging Techniques
+
+### Print Statements
+Use descriptive print statements for debugging:
+```swift
+print("🍎 Apple Sign-In handler called")
+print("✅ User profile saved for returning user experience")
+print("❌ No user ID found for saving profile")
+```
+
+### Debug Logging
+```swift
+// Use emojis for easy log identification
+print("🔧 Shake gesture ignored - already processing")
+print("📱 [\(timestamp)] Shake detected - Developer mode enabled")
+print("🔄 System appearance changed from Light to Dark")
+```
+
+### State Inspection
+```swift
+// Log current state for debugging
+print("📱 Current authentication state: \(isAuthenticated)")
+print("📱 Current onboarding completion: \(hasCompletedOnboarding)")
+print("🔍 System appearance check: \(currentStyle == .dark ? "Dark" : "Light")")
+```
+
+### AI-Powered Debugging
+```bash
+# Use AI to analyze debug logs
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze these debug logs for potential issues" --provider "anthropic"
+
+# Get debugging suggestions
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Suggest debugging approaches for this SwiftUI issue" --provider "openai"
+```
+
+## Common Debugging Scenarios
+
+### Authentication Issues
+- Check UserDefaults for authentication state
+- Verify Apple Sign-In configuration
+- Test with different Apple ID accounts
+- Check entitlements file
+
+### Theme Issues
+- Verify ThemeManager is properly injected
+- Check for hardcoded colors
+- Test theme switching
+- Verify dark mode contrast
+
+### Navigation Issues
+- Check navigation stack state
+- Verify route definitions
+- Test back navigation
+- Check modal presentations
+
+### Performance Issues
+- Use Instruments for profiling
+- Check memory usage
+- Monitor CPU usage
+- Test with large datasets
+
+### AI Service Issues
+- Test API connectivity with devintest tools
+- Verify API key configuration
+- Check error handling
+- Monitor response times
+
+## Testing Checklist
+
+### Before Committing
+- [ ] All tests pass
+- [ ] No compiler warnings
+- [ ] No runtime crashes
+- [ ] UI works in both light and dark modes
+- [ ] Navigation flows work correctly
+- [ ] Error handling is proper
+- [ ] Accessibility is maintained
+- [ ] AI features tested with devintest tools
+
+### Feature Testing
+- [ ] Test happy path scenarios
+- [ ] Test error scenarios
+- [ ] Test edge cases
+- [ ] Test with different data
+- [ ] Test performance
+- [ ] Test accessibility
+- [ ] Test with AI analysis tools
+
+### Integration Testing
+- [ ] Test API integrations
+- [ ] Test data persistence
+- [ ] Test authentication flows
+- [ ] Test photo analysis
+- [ ] Test profile management
+- [ ] Test Firebase integration
+
+## Error Handling Testing
+
+### Network Errors
+```swift
+// Test network failure scenarios
+// Simulate network timeouts
+// Test with poor connectivity
+// Verify error messages are user-friendly
+```
+
+### Validation Errors
+```swift
+// Test input validation
+// Test with invalid data
+// Test edge cases
+// Verify error messages are clear
+```
+
+### System Errors
+```swift
+// Test with low memory
+// Test with storage full
+// Test with permissions denied
+// Test with system errors
+```
+
+### AI Service Errors
+```bash
+# Test AI service error handling
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Test error handling for API failures" --provider "openai"
+```
+
+## Performance Testing
+
+### Memory Testing
+- Monitor memory usage during app usage
+- Test with large photo collections
+- Check for memory leaks
+- Test memory warnings
+
+### CPU Testing
+- Monitor CPU usage during operations
+- Test with heavy computations
+- Check for performance bottlenecks
+- Test with background tasks
+
+### Battery Testing
+- Monitor battery usage
+- Test with background processing
+- Check for excessive CPU usage
+- Test with location services
+
+### AI Performance Testing
+```bash
+# Test AI response times
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Measure response time for this AI operation" --provider "openai"
+```
+
+## Accessibility Testing
+
+### VoiceOver Testing
+- Test all interactive elements
+- Verify accessibility labels
+- Test navigation with VoiceOver
+- Check for accessibility issues
+
+### Dynamic Type Testing
+- Test with large text sizes
+- Test with small text sizes
+- Verify layouts work correctly
+- Check for text truncation
+
+### Color Contrast Testing
+- Test in both light and dark modes
+- Verify sufficient contrast
+- Test with color blindness
+- Check for accessibility compliance
+
+### AI-Enhanced Accessibility Testing
+```bash
+# Use AI to analyze accessibility
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze this UI for accessibility issues" --image screenshot.png --provider "gpt-4o"
+```
+
+## Debugging Tools
+
+### Xcode Debugger
+- Use breakpoints for debugging
+- Inspect variables and state
+- Step through code execution
+- Use console for logging
+
+### Instruments
+- Use Time Profiler for performance
+- Use Allocations for memory
+- Use Network for API calls
+- Use Energy for battery usage
+
+### Simulator Tools
+- Use Simulator for testing
+- Test with different devices
+- Test with different orientations
+- Test with different accessibility settings
+
+### Devintest Tools
+- Use LLM tools for code analysis
+- Use screenshot tools for UI testing
+- Use web scraping for research
+- Use search tools for solutions
+
+## Common Issues and Solutions
+
+### Build Issues
+- **Duplicate Files**: Check project.pbxproj for duplicates
+- **Missing Imports**: Add required import statements
+- **Deprecated APIs**: Update to current APIs
+- **Target Configuration**: Verify file targets
+
+### Runtime Issues
+- **Environment Objects**: Ensure proper injection
+- **State Management**: Check @State and @StateObject usage
+- **Navigation**: Verify navigation stack state
+- **Memory**: Check for retain cycles
+
+### UI Issues
+- **Theming**: Verify ThemeManager usage
+- **Layout**: Check constraints and spacing
+- **Animations**: Verify animation parameters
+- **Accessibility**: Check accessibility labels
+
+### AI Service Issues
+- **API Keys**: Verify configuration with devintest tools
+- **Network**: Test connectivity
+- **Rate Limits**: Monitor usage
+- **Error Handling**: Test error scenarios
+
+## Testing Best Practices
+
+### Test Organization
+- Group tests by feature
+- Use descriptive test names
+- Keep tests focused and simple
+- Use setup and teardown methods
+
+### Test Data
+- Use realistic test data
+- Test with edge cases
+- Use mock data for external services
+- Test with different data sizes
+
+### Test Coverage
+- Aim for high test coverage
+- Test critical paths
+- Test error scenarios
+- Test edge cases
+
+### Continuous Testing
+- Run tests frequently
+- Fix failing tests immediately
+- Keep tests up to date
+- Refactor tests when needed
+
+### AI-Enhanced Testing
+- Use AI tools for code review
+- Use AI for UI validation
+- Use AI for performance analysis
+- Use AI for accessibility testing

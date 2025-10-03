@@ -89,27 +89,26 @@ struct PlanDetailRow: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        HStack(spacing: 16) {
-            Image(systemName: icon)
-                .font(.title2)
-                .foregroundColor(themeManager.primary)
-                .frame(width: 30)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title)
-                    .font(.headline)
-                    .foregroundColor(themeManager.textPrimary)
+        EraSurfaceCard {
+            HStack(spacing: 16) {
+                Image(systemName: icon)
+                    .font(.title2)
+                    .foregroundColor(themeManager.primary)
+                    .frame(width: 30)
                 
-                Text(description)
-                    .font(.caption)
-                    .foregroundColor(themeManager.textSecondary)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(.headline)
+                        .foregroundColor(themeManager.textPrimary)
+                    
+                    Text(description)
+                        .font(.caption)
+                        .foregroundColor(themeManager.textSecondary)
+                }
+                
+                Spacer()
             }
-            
-            Spacer()
         }
-        .padding()
-        .background(themeManager.surface)
-        .cornerRadius(12)
     }
 }
 

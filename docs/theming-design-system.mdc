@@ -1,0 +1,219 @@
+# Theming & Design System
+
+## ThemeManager Integration
+
+### Always Use ThemeManager
+**CRITICAL**: Never use hardcoded colors. Always use [ThemeManager](mdc:on brand/Core/DesignSystem/ThemeManager.swift) for all colors and theming.
+
+```swift
+// ✅ CORRECT - Using ThemeManager
+@EnvironmentObject private var themeManager: ThemeManager
+
+var body: some View {
+    Text("Hello")
+        .foregroundColor(themeManager.textPrimary)
+        .background(themeManager.surface)
+}
+
+// ❌ WRONG - Hardcoded colors
+var body: some View {
+    Text("Hello")
+        .foregroundColor(.black)
+        .background(.white)
+}
+```
+
+### Required Environment Object
+Every view that uses theming must have:
+```swift
+@EnvironmentObject private var themeManager: ThemeManager
+```
+
+## Color Usage Guidelines
+
+### Primary Colors
+- **Primary**: `themeManager.primary` - Main brand color, buttons, links
+- **Secondary**: `themeManager.secondary` - Accent color, highlights
+- **Accent**: `themeManager.accent` - Special emphasis, warnings
+
+### Text Colors
+- **Primary Text**: `themeManager.textPrimary` - Main text content
+- **Secondary Text**: `themeManager.textSecondary` - Supporting text
+- **Subtle Text**: `themeManager.subtleText` - Captions, timestamps
+
+### Background Colors
+- **Background**: `themeManager.backgroundTop` - Main background
+- **Surface**: `themeManager.surface` - Cards, modals, elevated content
+- **Surface Outline**: `themeManager.surfaceOutline` - Borders, dividers
+
+### Specialized Colors
+- **Navigation**: `themeManager.navigationBackground` - Navigation bars
+- **Tab Bar**: `themeManager.tabBarBackground` - Bottom tab bar
+- **Separator**: `themeManager.separator` - Dividers between content
+
+## Dark Mode Support
+
+### Automatic Dark Mode
+The app automatically supports dark mode through ThemeManager. All colors adapt based on the current color scheme.
+
+### Theme Modes
+- **System**: Follows device setting (default)
+- **Light**: Always light mode
+- **Dark**: Always dark mode
+
+### Testing Dark Mode
+Always test both light and dark modes:
+1. Use device settings to toggle system appearance
+2. Use developer tools to force theme modes
+3. Verify contrast and readability in both modes
+
+## Design System Components
+
+### EraBackground
+Use [EraBackground](mdc:on brand/Core/DesignSystem/Components/EraBackground.swift) for main app backgrounds:
+```swift
+EraBackground()
+    .ignoresSafeArea()
+```
+
+### EraButtons
+Use [EraButtons](mdc:on brand/Core/DesignSystem/Components/EraButtons.swift) for consistent button styling:
+```swift
+EraPrimaryButton(title: "Continue") {
+    // Action
+}
+
+EraSecondaryButton(title: "Cancel") {
+    // Action
+}
+```
+
+### EraCards
+Use [EraCards](mdc:on brand/Core/DesignSystem/Components/EraCards.swift) for card-based layouts:
+```swift
+EraCard {
+    // Card content
+}
+```
+
+### EraNavigation
+Use [EraNavigation](mdc:on brand/Core/DesignSystem/Components/EraNavigation.swift) for navigation components.
+
+## Typography Guidelines
+
+### Font Usage
+- Use system fonts for consistency
+- Use `.font(.system(size:weight:design:))` for custom sizing
+- Prefer `.rounded` design for modern look
+
+### Font Hierarchy
+```swift
+// Headers
+.font(.system(size: 36, weight: .bold, design: .rounded))
+
+// Subheaders
+.font(.system(size: 24, weight: .semibold, design: .rounded))
+
+// Body text
+.font(.body)
+
+// Captions
+.font(.caption)
+```
+
+## Spacing Guidelines
+
+### Consistent Spacing
+Use multiples of 8 for spacing:
+- **4pt**: Very tight spacing
+- **8pt**: Tight spacing
+- **16pt**: Standard spacing
+- **24pt**: Loose spacing
+- **32pt**: Very loose spacing
+
+### Padding Examples
+```swift
+.padding(.horizontal, 24)  // Standard horizontal padding
+.padding(.vertical, 16)    // Standard vertical padding
+.padding(16)               // All sides
+.padding(.top, 32)         // Specific side
+```
+
+## Layout Guidelines
+
+### Instagram-Style Layouts
+The app uses Instagram-style layouts for consistency:
+- **Profile Headers**: Similar to Instagram profile headers
+- **Photo Grids**: Instagram-style photo grid layouts
+- **Action Buttons**: Instagram-style action button layouts
+- **Content Tabs**: Instagram-style content tab navigation
+
+### Card-Based Design
+- Use cards for grouped content
+- Add subtle shadows and borders
+- Use rounded corners (12pt radius)
+- Maintain consistent padding
+
+## Animation Guidelines
+
+### Theme Transitions
+- Use smooth transitions when switching themes
+- Animate color changes with `.animation(.easeInOut(duration: 0.3))`
+- Avoid jarring theme switches
+
+### Color Animations
+```swift
+.animation(.easeInOut(duration: 0.3), value: themeManager.colorScheme)
+```
+
+## Accessibility in Theming
+
+### Contrast Requirements
+- Ensure sufficient contrast between text and backgrounds
+- Test with accessibility tools
+- Provide alternative color schemes if needed
+
+### Dynamic Type Support
+- Use system fonts that scale with Dynamic Type
+- Test with large text sizes
+- Ensure layouts work with different text sizes
+
+## Common Theming Mistakes
+
+### ❌ Avoid These Patterns
+```swift
+// Hardcoded colors
+.foregroundColor(.black)
+.background(.white)
+
+// System colors without theme consideration
+.foregroundColor(.primary)
+.background(.secondary)
+
+// Inconsistent spacing
+.padding(13)  // Not a multiple of 8
+```
+
+### ✅ Use These Patterns
+```swift
+// Theme-aware colors
+.foregroundColor(themeManager.textPrimary)
+.background(themeManager.surface)
+
+// Consistent spacing
+.padding(16)  // Multiple of 8
+
+// Theme-aware system colors
+.foregroundColor(themeManager.primary)
+```
+
+## Theme Testing Checklist
+
+### Before Committing
+- [ ] All colors use ThemeManager
+- [ ] Tested in both light and dark modes
+- [ ] No hardcoded colors remain
+- [ ] Contrast is sufficient in both modes
+- [ ] Animations are smooth
+- [ ] Dynamic Type works correctly
+- [ ] Accessibility labels are appropriate
