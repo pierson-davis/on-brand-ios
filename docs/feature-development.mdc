@@ -1,0 +1,474 @@
+# Feature Development & Navigation
+
+## Feature Architecture
+
+### Feature Module Structure
+Each feature follows this consistent structure:
+```
+Features/[FeatureName]/
+├── Models/          # Data models and business logic
+├── Services/        # API calls, data persistence, external integrations
+├── ViewModels/      # MVVM view models for state management
+├── Views/           # SwiftUI views and screens
+└── Components/      # Reusable UI components specific to the feature
+```
+
+### Feature Development Checklist
+- [ ] Create feature directory structure
+- [ ] Define data models in Models/
+- [ ] Implement services in Services/
+- [ ] Create ViewModels for state management
+- [ ] Build Views with proper theming
+- [ ] Extract reusable Components
+- [ ] Add navigation routes
+- [ ] Test all user flows
+- [ ] Add error handling
+- [ ] Ensure accessibility
+- [ ] Use AI tools for code review and testing
+
+## AI-Enhanced Feature Development
+
+### Pre-Development Research
+Use devintest tools to research and plan features:
+
+```bash
+# Research competitor features
+venv/bin/python3 devintest/tools/web_scraper.py --max-concurrent 3 https://competitor1.com https://competitor2.com
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze these competitor features and suggest improvements for our app" --provider "anthropic"
+
+# Research technical solutions
+venv/bin/python3 devintest/tools/search_engine.py "SwiftUI Firebase real-time sync best practices"
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review these technical solutions and recommend the best approach" --provider "openai"
+```
+
+### Code Development with AI
+```bash
+# Get AI assistance during development
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Help me implement a SwiftUI view for influencer deal management with proper MVVM architecture" --provider "anthropic"
+
+# Review code implementations
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review this SwiftUI implementation for best practices, performance, and accessibility" --provider "openai"
+```
+
+### UI/UX Validation
+```bash
+# Capture and analyze UI designs
+venv/bin/python3 devintest/tools/screenshot_utils.py https://your-app.com feature_screenshot.png
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze this UI design for usability, accessibility, and consistency with the app's design system" --image feature_screenshot.png --provider "gpt-4o"
+```
+
+## Navigation Patterns
+
+### NavigationStack Usage
+The app uses `NavigationStack` for main navigation with typed routes:
+
+```swift
+enum AppRoute: Hashable {
+    case photoAnalyzer(VibeResult)
+    case profileDetail(UserProfile)
+    case settings
+}
+
+@State private var path: [AppRoute] = []
+
+NavigationStack(path: $path) {
+    // Main content
+}
+.navigationDestination(for: AppRoute.self) { route in
+    switch route {
+    case .photoAnalyzer(let result):
+        PhotoAnalyzerView(result: result)
+    case .profileDetail(let profile):
+        ProfileDetailView(profile: profile)
+    case .settings:
+        SettingsView()
+    }
+}
+```
+
+### Navigation Methods
+```swift
+// Navigate to a new screen
+path.append(.photoAnalyzer(vibeResult))
+
+// Navigate back
+path.removeLast()
+
+// Navigate to root
+path.removeAll()
+
+// Replace current screen
+path = [.settings]
+```
+
+### Modal Presentations
+Use sheets for modal presentations:
+```swift
+@State private var showModal = false
+
+.sheet(isPresented: $showModal) {
+    ModalView()
+}
+```
+
+## Authentication Flow
+
+### Authentication States
+The app has three main authentication states:
+1. **Unauthenticated**: Show login screen
+2. **Authenticated + No Profile**: Show onboarding flow
+3. **Authenticated + Profile**: Show main app
+
+### Authentication Implementation
+```swift
+// Check authentication status
+private func checkAuthenticationStatus() {
+    isAuthenticated = UserDefaults.standard.bool(forKey: "is_authenticated")
+}
+
+// Handle Apple Sign-In
+private func handleAppleSignIn(_ result: Result<ASAuthorization, Error>) {
+    // Implementation in ContentView.swift
+}
+```
+
+### User Profile Management
+- Use `UserProfileService.shared` for profile operations
+- Store user data in UserDefaults for persistence
+- Clear profile data on logout
+
+## Onboarding Flow
+
+### Onboarding Structure
+The app has an 18-screen onboarding flow:
+1. **Hero Screen**: Welcome and introduction
+2. **Problem Screen**: Problem identification
+3. **Checklist Screen**: Feature overview
+4. **Welcome Screen**: User greeting
+5. **Name Input**: User name collection
+6. **Gender Selection**: Gender preference
+7. **Question Screens**: Style quiz questions
+8. **Plan Screen**: Subscription plan selection
+9. **Progress Screens**: Progress tracking
+10. **Permission Screen**: Photo access permission
+11. **Summary Screen**: Onboarding completion
+
+### Onboarding State Management
+```swift
+@StateObject private var vm = OnboardingViewModel()
+
+// Track onboarding completion
+.onChange(of: vm.finished) { _, finished in
+    if finished {
+        let result = vm.makeVibeResult()
+        saveUserProfile(result)
+        hasCompletedOnboarding = true
+    }
+}
+```
+
+### AI-Enhanced Onboarding Testing
+```bash
+# Test onboarding flow with AI
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review this onboarding flow implementation for user experience and completion rates" --provider "anthropic"
+
+# Analyze onboarding screenshots
+venv/bin/python3 devintest/tools/screenshot_utils.py https://your-app.com onboarding_screenshot.png
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze this onboarding screen for clarity and user guidance" --image onboarding_screenshot.png --provider "gpt-4o"
+```
+
+## Photo Analysis Features
+
+### Photo Analysis Flow
+1. **Photo Selection**: User selects photos from library
+2. **AI Analysis**: Photos are analyzed using OpenAI
+3. **Vibe Matching**: Photos are matched to user's archetype
+4. **Curation**: Best photos are selected and presented
+
+### AI Service Integration
+```swift
+// Use AIService for photo analysis
+let aiService = AIService()
+let analysis = await aiService.analyzePhoto(imageData)
+
+// Use VibeAnalyzer for vibe matching
+let vibeAnalyzer = VibeAnalyzer()
+let curatedPhotos = vibeAnalyzer.curatePhotos(photos, for: vibeResult)
+```
+
+### AI Feature Testing
+```bash
+# Test AI photo analysis
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Test this AI photo analysis feature with sample images" --provider "openai"
+
+# Validate AI integration
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review this AI service integration for error handling and performance" --provider "anthropic"
+```
+
+## Profile Management
+
+### Instagram-Style Profile
+The profile follows Instagram's design patterns:
+- **Header**: Profile photo, stats, action buttons
+- **Content Tabs**: Photos, tagged content, etc.
+- **Photo Grid**: Instagram-style photo grid layout
+
+### Profile Components
+- `ProfileHeaderComponent`: Profile header with stats
+- `ProfileActionButtons`: Follow, message, share buttons
+- `ProfileContentTabs`: Tab navigation for content
+- `ProfilePhotoGrid`: Instagram-style photo grid
+
+### Profile Feature Testing
+```bash
+# Test profile UI with AI
+venv/bin/python3 devintest/tools/screenshot_utils.py https://your-app.com profile_screenshot.png
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze this profile UI for Instagram-style consistency and user engagement" --image profile_screenshot.png --provider "gpt-4o"
+```
+
+## Home Dashboard
+
+### Dashboard Components
+- **Welcome Section**: Personalized greeting
+- **Recent Photos**: Recently analyzed photos
+- **Quick Actions**: Common app actions
+
+### Dashboard Implementation
+```swift
+struct HomeView: View {
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                WelcomeSection()
+                RecentPhotosSection()
+                QuickActionsSection()
+            }
+        }
+    }
+}
+```
+
+## Settings and Configuration
+
+### Settings Structure
+- **Theme Settings**: Light/Dark mode selection
+- **Account Settings**: User account management
+- **Privacy Settings**: Data and privacy controls
+- **About**: App information and version
+
+### Settings Implementation
+```swift
+struct SettingsView: View {
+    @EnvironmentObject private var themeManager: ThemeManager
+    
+    var body: some View {
+        List {
+            Section("Appearance") {
+                ThemeModePicker()
+            }
+            Section("Account") {
+                AccountSettings()
+            }
+        }
+    }
+}
+```
+
+## Error Handling
+
+### Error States
+- **Network Errors**: API call failures
+- **Authentication Errors**: Sign-in failures
+- **Validation Errors**: Input validation failures
+- **System Errors**: Unexpected errors
+
+### Error Handling Pattern
+```swift
+@State private var showError = false
+@State private var errorMessage = ""
+
+.alert("Error", isPresented: $showError) {
+    Button("OK") { showError = false }
+} message: {
+    Text(errorMessage)
+}
+```
+
+### AI-Enhanced Error Handling
+```bash
+# Test error handling with AI
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review this error handling implementation for completeness and user experience" --provider "anthropic"
+
+# Analyze error scenarios
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Suggest improvements for this error handling code" --provider "openai"
+```
+
+## Loading States
+
+### Loading Patterns
+- **Full Screen Loading**: For major operations
+- **Inline Loading**: For specific components
+- **Skeleton Loading**: For content placeholders
+
+### Loading Implementation
+```swift
+@State private var isLoading = false
+
+var body: some View {
+    ZStack {
+        mainContent
+        
+        if isLoading {
+            LoadingView()
+        }
+    }
+}
+```
+
+## Data Persistence
+
+### UserDefaults Usage
+- Store authentication state
+- Store user preferences
+- Store app configuration
+
+### Profile Data
+- Use `UserProfileService` for profile management
+- Store profile data locally
+- Sync with backend when available
+
+## Feature Integration
+
+### Adding New Features
+1. Create feature directory structure
+2. Define data models
+3. Implement services
+4. Create ViewModels
+5. Build Views with theming
+6. Add navigation routes
+7. Test thoroughly
+8. Add error handling
+9. Use AI tools for validation
+
+### Feature Dependencies
+- All features depend on ThemeManager
+- Authentication features depend on AuthenticationService
+- Photo features depend on AIService
+- Profile features depend on UserProfileService
+
+### AI-Enhanced Feature Integration
+```bash
+# Validate feature integration
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review this feature integration for consistency and best practices" --provider "anthropic"
+
+# Test feature completeness
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Validate this feature implementation for completeness and user experience" --provider "openai"
+```
+
+## Performance Considerations
+
+### View Performance
+- Use `LazyVStack`/`LazyHStack` for large lists
+- Avoid creating objects in view body
+- Use `@StateObject` for view-owned state
+- Minimize view updates
+
+### Memory Management
+- Use weak references for delegates
+- Clean up resources in `onDisappear`
+- Avoid retain cycles
+- Use `@StateObject` appropriately
+
+### AI Performance Testing
+```bash
+# Test performance with AI
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze this code for performance bottlenecks and optimization opportunities" --provider "openai"
+```
+
+## Testing Features
+
+### Unit Testing
+- Test ViewModels independently
+- Test service methods
+- Test data models
+- Mock external dependencies
+
+### UI Testing
+- Test user flows end-to-end
+- Test navigation paths
+- Test error scenarios
+- Test accessibility
+
+### Integration Testing
+- Test API integrations
+- Test data persistence
+- Test authentication flows
+- Test photo analysis
+- Test profile management
+
+### AI-Enhanced Testing
+```bash
+# Comprehensive feature testing
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Create a comprehensive test plan for this feature" --provider "anthropic"
+
+# Test feature with real data
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Test this feature implementation with realistic user scenarios" --provider "openai"
+```
+
+## Feature Development Workflow
+
+### 1. Research Phase
+- Use devintest tools to research competitors
+- Analyze market trends and user needs
+- Research technical solutions
+- Plan feature architecture
+
+### 2. Design Phase
+- Create UI mockups
+- Use AI to validate designs
+- Test accessibility and usability
+- Refine based on AI feedback
+
+### 3. Development Phase
+- Implement feature with AI assistance
+- Use AI for code review
+- Test with AI validation
+- Iterate based on feedback
+
+### 4. Testing Phase
+- Comprehensive testing with AI tools
+- UI validation with screenshots
+- Performance testing
+- Accessibility testing
+
+### 5. Integration Phase
+- Integrate with existing features
+- Test cross-feature interactions
+- Validate with AI tools
+- Final quality assurance
+
+## Best Practices
+
+### Code Quality
+- Use AI tools for code review
+- Follow SwiftUI best practices
+- Maintain consistent architecture
+- Document thoroughly
+
+### User Experience
+- Test with AI validation
+- Ensure accessibility
+- Maintain design consistency
+- Optimize for performance
+
+### Testing
+- Use AI for comprehensive testing
+- Test with real data
+- Validate UI with screenshots
+- Test edge cases
+
+### Maintenance
+- Use AI for ongoing improvements
+- Monitor performance
+- Update based on user feedback
+- Maintain code quality

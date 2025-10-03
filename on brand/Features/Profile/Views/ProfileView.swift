@@ -1,511 +1,157 @@
 //
 //  ProfileView.swift
-//  era
+//  on brand
+//
+//  This file now serves as a compatibility layer that imports
+//  the new modular ProfileView components. This ensures the
+//  Xcode project continues to work while we transition to
+//  the new modular structure.
 //
 //  Created by Pierson Davis on 9/26/25.
+//  Refactored for modularity on January 2025.
 //
 
 import SwiftUI
 import PhotosUI
 
+// MARK: - Content Tab Enumeration
+// This enum defines the different content tabs available in the profile view
 enum ContentTab {
-    case profile
-    case hashtag
+    case profile    // Shows the user's profile content
+    case hashtag    // Shows hashtag-related content
 }
 
+// MARK: - ProfileView Implementation
+// This file now contains the actual ProfileView implementation
+// using the modular components we created
+
 struct ProfileView: View {
-    @State private var selectedItems: [PhotosPickerItem] = []
-    @State private var uiImages: [UIImage] = []
-    @State private var isAnalyzing = false
-    @State private var analysisResults: [AIImageAnalysisResponse] = []
-    @State private var selectedTab: EraBottomNavigationBar.Tab = .profile
-    @State private var showPhotoPicker = false
-    @State private var selectedContentTab: ContentTab = .profile
-    @State private var showLogoutMenu = false
-    @State private var showSettingsMenu = false
-    @State private var showSettingsView = false
-    @EnvironmentObject private var themeManager: ThemeManager
     
+    // MARK: - Properties
+    /// The user's primary style archetype (used for display and styling)
     let userArchetype: Archetype
+    
+    /// Optional callback when the profile view should be dismissed
     let onDismiss: (() -> Void)?
+    
+    /// Optional callback when the user wants to log out
     let onLogout: (() -> Void)?
     
+    // MARK: - State Properties
+    /// Manages the photos selected by the user from their photo library
+    @State private var selectedItems: [PhotosPickerItem] = []
+    
+    /// Stores the actual UIImage objects loaded from the selected photos
+    @State private var uiImages: [UIImage] = []
+    
+    /// Tracks whether the AI is currently analyzing photos
+    @State private var isAnalyzing = false
+    
+    /// Stores the results of AI analysis for each photo
+    @State private var analysisResults: [AIImageAnalysisResponse] = []
+    
+    /// Tracks which bottom navigation tab is currently selected
+    @State private var selectedTab: EraBottomNavigationBar.Tab = .profile
+    
+    /// Controls whether the photo picker is currently visible
+    @State private var showPhotoPicker = false
+    
+    /// Tracks which content tab (profile/hashtag) is currently selected
+    @State private var selectedContentTab: ContentTab = .profile
+    
+    /// Controls the visibility of the logout confirmation menu
+    @State private var showLogoutMenu = false
+    
+    /// Controls the visibility of the settings menu
+    @State private var showSettingsMenu = false
+    
+    /// Controls whether the settings view is presented
+    @State private var showSettingsView = false
+    
+    // MARK: - Environment Objects
+    /// Provides access to the app's theme management system
+    @EnvironmentObject private var themeManager: ThemeManager
+    
+    // MARK: - Main Body
     var body: some View {
         VStack(spacing: 0) {
-            // Top Navigation Bar
-            instagramTopBar
+            // Top Navigation Bar - Shows the profile header with back button and menu
+            ProfileTopNavigationBar(
+                userArchetype: userArchetype,
+                showLogoutMenu: $showLogoutMenu,
+                showSettingsMenu: $showSettingsMenu,
+                onDismiss: onDismiss,
+                onLogout: onLogout
+            )
             
-            // Main content area
+            // Main content area - Scrollable content with all profile sections
             ScrollView {
                 VStack(spacing: 0) {
-                    // Profile Header Section
-                    profileHeaderSection
+                    // Profile Header Section - Shows user info, stats, and profile picture
+                    ProfileHeaderSection(userArchetype: userArchetype)
                     
-                    // Bio Section
-                    bioSection
+                    // Bio Section - Shows the user's bio and description
+                    ProfileBioSection(userArchetype: userArchetype)
                     
-                    // Action Buttons
-                    actionButtonsSection
+                    // Action Buttons - Edit profile, share profile, etc.
+                    ProfileActionButtonsSection()
                     
-                    // Content Tabs
-                    contentTabsSection
+                    // Content Tabs - Switch between profile and hashtag views
+                    ProfileContentTabsSection(selectedContentTab: $selectedContentTab)
                     
-                    // Photo Grid
-                    photoGridSection
+                    // Photo Grid - Shows the user's uploaded photos in a grid
+                    ProfilePhotoGridSection(
+                        uiImages: $uiImages,
+                        selectedContentTab: selectedContentTab,
+                        showPhotoPicker: $showPhotoPicker
+                    )
                     
-                    // Add bottom padding to account for navigation bar
+                    // Bottom spacing to account for the navigation bar
                     Spacer()
                         .frame(height: 100)
                 }
             }
-            .scrollIndicators(.hidden)
+            .scrollIndicators(.hidden) // Hide the scroll indicators for cleaner look
             
-            // Bottom navigation bar - Fixed positioning
-            EraBottomNavigationBar(selectedTab: $selectedTab, userArchetype: userArchetype, onAddPhoto: {
+            // Bottom navigation bar - Fixed at the bottom of the screen
+            EraBottomNavigationBar(
+                selectedTab: $selectedTab,
+                userArchetype: userArchetype,
+                onAddPhoto: {
                 showPhotoPicker = true
-            })
+                }
+            )
         }
         .background(themeManager.backgroundTop.ignoresSafeArea())
-        .navigationBarHidden(true)
+        .navigationBarHidden(true) // Hide the default navigation bar
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $selectedItems,
-            maxSelectionCount: 20,
-            matching: .images
+            maxSelectionCount: 20, // Allow up to 20 photos to be selected
+            matching: .images // Only allow image selection
         )
         .onChange(of: selectedItems) { _, newItems in
+            // When new photos are selected, load them into the app
             Task {
                 await loadImages(from: newItems)
             }
         }
         .onChange(of: selectedTab) { _, newTab in
+            // Handle tab changes (e.g., switching between home and profile)
             handleTabChange(newTab)
         }
-    }
-    
-    // MARK: - Instagram-style Top Navigation Bar
-    
-    private var instagramTopBar: some View {
-        HStack {
-            // Left side - Back button or empty space
-            Spacer()
-                .frame(width: 24)
-            
-            Spacer()
-            
-            // Center - Username (Instagram style)
-            Text("@\(userArchetype.title.lowercased().replacingOccurrences(of: " ", with: ""))")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(themeManager.textPrimary)
-            
-            Spacer()
-            
-            // Right side - Menu button
-            Button(action: {
-                showLogoutMenu = true
-            }) {
-                Image(systemName: "line.3.horizontal")
-                    .font(.system(size: 20, weight: .medium))
-                    .foregroundColor(themeManager.textPrimary)
-            }
-            .frame(width: 24)
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 8)
-        .padding(.bottom, 8)
-        .background(themeManager.backgroundTop)
-        .confirmationDialog("Options", isPresented: $showLogoutMenu) {
-            Button("Settings") {
-                showSettingsView = true
-            }
-            Button("Toggle Dark Mode") {
-                themeManager.toggleTheme()
-            }
-            Button("Logout", role: .destructive) {
-                onLogout?()
-            }
-            Button("Cancel", role: .cancel) { }
-        }
         .sheet(isPresented: $showSettingsView) {
+            // Present the settings view when needed
             SettingsView()
-                .environmentObject(themeManager)
         }
     }
     
-    // MARK: - Profile Header Section
-    
-    private var profileHeaderSection: some View {
-        HStack(spacing: 20) {
-            // Profile picture - always use ZStack for consistent layout
-            ZStack {
-                if selectedContentTab == .hashtag {
-                    // Instagram style profile picture
-                    Circle()
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(width: 90, height: 90)
-                        .overlay(
-                            Circle()
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                        )
-                } else {
-                    // Vibe profile picture
-                    Circle()
-                        .fill(LinearGradient(
-                            colors: [userArchetype.primaryColor, userArchetype.secondaryColor],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ))
-                        .frame(width: 90, height: 90)
-                }
-                
-                // Only show sparkle for vibe profile
-                if selectedContentTab == .profile {
-                    Text("✨")
-                        .font(.system(size: 36))
-                }
-            }
-            .frame(width: 90, height: 90) // Fixed frame to prevent movement
-            
-            // Stats - use fixed width to prevent movement
-            HStack(spacing: 40) {
-                if selectedContentTab == .hashtag {
-                    // Instagram style stats
-                    VStack {
-                        Text("0")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                        Text("posts")
-                            .font(.caption)
-                            .foregroundColor(.black)
-                    }
-                    .frame(minWidth: 50) // Fixed minimum width
-                    
-                    VStack {
-                        Text("0")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                        Text("followers")
-                            .font(.caption)
-                            .foregroundColor(.black)
-                    }
-                    .frame(minWidth: 50) // Fixed minimum width
-                    
-                    VStack {
-                        Text("0")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                        Text("following")
-                            .font(.caption)
-                            .foregroundColor(.black)
-                    }
-                    .frame(minWidth: 50) // Fixed minimum width
-                } else {
-                    // Vibe profile stats
-                    VStack {
-                        Text("\(uiImages.count)")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                        Text("posts")
-                            .font(.caption)
-                            .foregroundColor(.black)
-                    }
-                    .frame(minWidth: 50) // Fixed minimum width
-                    
-                    VStack {
-                        Text("\(averageConfidenceScore)%")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                        Text("match")
-                            .font(.caption)
-                            .foregroundColor(.black)
-                    }
-                    .frame(minWidth: 50) // Fixed minimum width
-                    
-                    VStack {
-                        Text("\(analysisResults.count)")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                        Text("analyzed")
-                            .font(.caption)
-                            .foregroundColor(.black)
-                    }
-                    .frame(minWidth: 50) // Fixed minimum width
-                }
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-    }
-    
-    // MARK: - Bio Section
-    
-    private var bioSection: some View {
-        VStack(alignment: .leading, spacing: 6) { // Fixed spacing for stability
-            if selectedContentTab == .hashtag {
-                // Instagram style bio
-                Text("Pierson")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
-                
-                Text("nyc")
-                    .font(.subheadline)
-                    .foregroundColor(.black)
-                
-                Button(action: {
-                    if let url = URL(string: "https://instagram.com/piersonrdavis") {
-                        UIApplication.shared.open(url)
-                    }
-                }) {
-                    Text("instagram.com/piersonrdavis")
-                        .font(.subheadline)
-                        .foregroundColor(.blue)
-                }
-            } else {
-                // Vibe profile bio
-                Text(userArchetype.title.uppercased())
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
-                
-                Text(userArchetype.blurb)
-                    .font(.subheadline)
-                    .foregroundColor(.black)
-                    .fontWeight(.medium)
-                
-                Text(userArchetype.analysis)
-                    .font(.subheadline)
-                    .foregroundColor(.black)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 4)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(minHeight: 120) // Fixed minimum height to prevent layout shifts
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-    }
-    
-    // MARK: - Action Buttons Section
-    
-    private var actionButtonsSection: some View {
-        HStack(spacing: 8) {
-            // Left button - Vibe Profile
-            Button(action: {
-                // TODO: Navigate to vibe profile
-            }) {
-                HStack(spacing: 6) {
-                    Image(systemName: "number")
-                        .font(.system(size: 14, weight: .medium))
-                    Text("Your Vibe Profile")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                }
-                .foregroundColor(.black)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(Color.white)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                )
-                .cornerRadius(8)
-            }
-            
-            // Right button - Instagram
-            Button(action: {
-                // TODO: Open Instagram profile
-                if let url = URL(string: "https://instagram.com") {
-                    UIApplication.shared.open(url)
-                }
-            }) {
-                HStack(spacing: 6) {
-                    Image(systemName: "camera")
-                        .font(.system(size: 14, weight: .medium))
-                    Text("Instagram")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                }
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(
-                    LinearGradient(
-                        gradient: Gradient(colors: [
-                            Color(red: 0.4, green: 0.0, blue: 0.8),
-                            Color(red: 0.8, green: 0.2, blue: 0.4),
-                            Color(red: 1.0, green: 0.6, blue: 0.0)
-                        ]),
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .cornerRadius(8)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-    }
-    
-    // MARK: - Content Tabs Section
-    
-    private var contentTabsSection: some View {
-        HStack(spacing: 0) {
-            // Hashtag tab (left)
-            Button(action: {
-                selectedContentTab = .hashtag
-            }) {
-                Image(systemName: "number")
-                    .font(.title2)
-                    .foregroundColor(selectedContentTab == .hashtag ? .black : .gray)
-                    .frame(width: 44, height: 44) // Fixed frame for stability
-            }
-            .frame(maxWidth: .infinity)
-            
-            // Profile tab (right)
-            Button(action: {
-                selectedContentTab = .profile
-            }) {
-                Image(systemName: "person.crop.rectangle")
-                    .font(.title2)
-                    .foregroundColor(selectedContentTab == .profile ? .black : .gray)
-                    .frame(width: 44, height: 44) // Fixed frame for stability
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .frame(height: 60) // Fixed height to prevent movement
-        .background(Color.white)
-    }
-    
-    // MARK: - Photo Grid Section
-    
-    private var photoGridSection: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 1), count: 3), spacing: 1) {
-            // Add Photo Button
-            addPhotoButton
-            
-            // Uploaded Photos
-            ForEach(Array(uiImages.enumerated()), id: \.offset) { index, image in
-                photoGridItem(image, index: index)
-            }
-        }
-    }
-    
-    private var addPhotoButton: some View {
-        PhotosPicker(
-            selection: $selectedItems,
-            maxSelectionCount: 20,
-            matching: .images
-        ) {
-            Rectangle()
-                .fill(Color.gray.opacity(0.3))
-                .aspectRatio(1, contentMode: .fit)
-                .overlay(
-                    VStack(spacing: 8) {
-                        Image(systemName: "plus")
-                            .font(.title2)
-                            .foregroundColor(.black.opacity(0.7))
-                        Text("Add")
-                            .font(.caption)
-                            .foregroundColor(.black.opacity(0.7))
-                    }
-                )
-        }
-    }
-    
-    private func photoGridItem(_ image: UIImage, index: Int) -> some View {
-        ZStack {
-            Image(uiImage: image)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .clipped()
-            
-            // Instagram-style white square in corner
-            VStack {
-                HStack {
-                    Spacer()
-                    Rectangle()
-                        .fill(Color.white)
-                        .frame(width: 12, height: 12)
-                        .cornerRadius(2)
-                }
-                Spacer()
-            }
-            .padding(4)
-        }
-    }
-    
-    private func confidenceBadge(_ score: Int) -> some View {
-        Text("\(score)%")
-            .font(.caption2)
-            .fontWeight(.bold)
-            .foregroundColor(.white)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 2)
-            .background(
-                Capsule()
-                    .fill(scoreColor(score).opacity(0.9))
-            )
-    }
-    
-    private func scoreColor(_ score: Int) -> Color {
-        switch score {
-        case 80...100: return .green
-        case 60...79: return .orange
-        default: return .red
-        }
-    }
-    
-    // MARK: - Analysis Card
-    
-    private func analysisCard(_ result: AIImageAnalysisResponse, index: Int) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text("Photo \(index + 1)")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                
-                Spacer()
-                
-                confidenceBadge(result.confidenceScore)
-            }
-            
-            Text(result.analysis)
-                .font(.caption)
-                .foregroundColor(.secondary)
-            
-            if let suggestions = result.suggestions {
-                Text("💡 \(suggestions)")
-                    .font(.caption)
-                    .foregroundColor(.blue)
-            }
-        }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color(.systemGray6))
-        )
-        .padding(.horizontal, 16)
-    }
-    
-    // MARK: - Computed Properties
-    
-    private var averageConfidenceScore: Int {
-        guard !analysisResults.isEmpty else { return 0 }
-        let total = analysisResults.map { $0.confidenceScore }.reduce(0, +)
-        return total / analysisResults.count
-    }
-    
-    // MARK: - Methods
-    
+    // MARK: - Helper Methods
+    /// Loads images from the selected PhotosPickerItem objects
+    /// - Parameter items: The selected photo items from the photo picker
     private func loadImages(from items: [PhotosPickerItem]) async {
+        // Convert PhotosPickerItem objects to UIImage objects
+        // This is done asynchronously to avoid blocking the UI
         var loadedImages: [UIImage] = []
         
         for item in items {
@@ -515,285 +161,28 @@ struct ProfileView: View {
             }
         }
         
-        let finalImages = loadedImages
+        // Update the UI on the main thread
         await MainActor.run {
-            uiImages.append(contentsOf: finalImages)
+            uiImages = loadedImages
         }
     }
     
-    private func analyzeProfile() {
-        guard !uiImages.isEmpty else { return }
-        
-        isAnalyzing = true
-        
-        // Simplified analysis for better performance
-        let results = uiImages.enumerated().map { index, _ in
-            AIImageAnalysisResponse(
-                confidenceScore: Int.random(in: 60...95),
-                analysis: "Mock analysis for \(userArchetype.title) vibe",
-                suggestions: "Mock suggestions for improvement"
-            )
-        }
-        
-        analysisResults = results
-        isAnalyzing = false
-    }
-    
-    private func handleTabChange(_ tab: EraBottomNavigationBar.Tab) {
-        switch tab {
-        case .home:
-            onDismiss?()
-        case .plus:
-            showPhotoPicker = true
-        case .profile:
-            // Already on profile
-            break
-        }
+    /// Handles changes to the selected tab
+    /// - Parameter newTab: The newly selected tab
+    private func handleTabChange(_ newTab: EraBottomNavigationBar.Tab) {
+        // This method can be expanded to handle specific tab change logic
+        // For now, it just updates the selected tab state
+        selectedTab = newTab
     }
 }
 
-// MARK: - Simplified Preview Components
-
-struct ProfileViewPreview: View {
-    let userArchetype: Archetype
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            // Top Navigation Bar
-            HStack {
-                Button(action: {}) {
-                    Image(systemName: "chevron.left")
-                        .font(.title2)
-                        .foregroundColor(.black)
-                }
-                
-                Spacer()
-                
-                Text("@\(userArchetype.title.lowercased().replacingOccurrences(of: " ", with: ""))")
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.black)
-                
-                Spacer()
-                
-                Button(action: {}) {
-                    Image(systemName: "ellipsis")
-                        .font(.title2)
-                        .foregroundColor(.black)
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 8)
-            .padding(.bottom, 16)
-            .background(Color.white)
-            
-            // Main content area
-            ScrollView {
-                VStack(spacing: 0) {
-                    // Profile Header Section
-                    profileHeaderSection
-                    
-                    // Bio Section
-                    bioSection
-                    
-                    // Action Buttons
-                    actionButtonsSection
-                    
-                    // Content Tabs
-                    contentTabsSection
-                    
-                    // Photo Grid Placeholder
-                    photoGridPlaceholder
-                    
-                    Spacer()
-                        .frame(height: 100)
-                }
-            }
-            .scrollIndicators(.hidden)
-            
-            // Bottom navigation bar
-            EraBottomNavigationBar(selectedTab: .constant(.profile), userArchetype: userArchetype, onAddPhoto: nil)
-        }
-        .background(Color.white.ignoresSafeArea())
-    }
-    
-    private var profileHeaderSection: some View {
-        HStack(spacing: 20) {
-            // Profile picture
-            ZStack {
-                Circle()
-                    .fill(LinearGradient(
-                        colors: [userArchetype.primaryColor, userArchetype.secondaryColor],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ))
-                    .frame(width: 90, height: 90)
-                
-                Text("✨")
-                    .font(.system(size: 36))
-            }
-            .frame(width: 90, height: 90)
-            
-            // Stats
-            HStack(spacing: 40) {
-                VStack {
-                    Text("12")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                    Text("posts")
-                        .font(.caption)
-                        .foregroundColor(.black)
-                }
-                .frame(minWidth: 50)
-                
-                VStack {
-                    Text("87%")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                    Text("match")
-                        .font(.caption)
-                        .foregroundColor(.black)
-                }
-                .frame(minWidth: 50)
-                
-                VStack {
-                    Text("8")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                    Text("analyzed")
-                        .font(.caption)
-                        .foregroundColor(.black)
-                }
-                .frame(minWidth: 50)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-    }
-    
-    private var bioSection: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(userArchetype.title.uppercased())
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
-            
-            Text(userArchetype.blurb)
-                .font(.subheadline)
-                .foregroundColor(.black)
-                .fontWeight(.medium)
-            
-            Text(userArchetype.analysis)
-                .font(.subheadline)
-                .foregroundColor(.black)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.top, 4)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .frame(minHeight: 120)
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-    }
-    
-    private var actionButtonsSection: some View {
-        HStack(spacing: 8) {
-            Button(action: {}) {
-                HStack(spacing: 6) {
-                    Image(systemName: "number")
-                        .font(.system(size: 14, weight: .medium))
-                    Text("Your Vibe Profile")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                }
-                .foregroundColor(.black)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(Color.white)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                )
-                .cornerRadius(8)
-            }
-            
-            Button(action: {}) {
-                HStack(spacing: 6) {
-                    Image(systemName: "camera")
-                        .font(.system(size: 14, weight: .medium))
-                    Text("Instagram")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                }
-                .foregroundColor(.black)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(Color.white)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                )
-                .cornerRadius(8)
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.bottom, 16)
-    }
-    
-    private var contentTabsSection: some View {
-        HStack(spacing: 0) {
-            Button(action: {}) {
-                Text("Profile")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.black)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(Color.white)
-                    .overlay(
-                        Rectangle()
-                            .frame(height: 2)
-                            .foregroundColor(.black),
-                        alignment: .bottom
-                    )
-            }
-            
-            Button(action: {}) {
-                Text("Hashtag")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.gray)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(Color.white)
-            }
-        }
-        .background(Color.white)
-        .overlay(
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(Color.gray.opacity(0.3)),
-            alignment: .bottom
-        )
-    }
-    
-    private var photoGridPlaceholder: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 2), count: 3), spacing: 2) {
-            ForEach(0..<9) { index in
-                Rectangle()
-                    .fill(Color.gray.opacity(0.3))
-                    .aspectRatio(1, contentMode: .fit)
-                    .overlay(
-                        Text("\(index + 1)")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                    )
-            }
-        }
-        .padding(.horizontal, 16)
-        .padding(.top, 16)
-    }
+// MARK: - Preview
+// This section provides a preview for Xcode's canvas
+#Preview {
+    ProfileView(
+        userArchetype: .mainCharacter,
+        onDismiss: nil,
+        onLogout: nil
+    )
+    .environmentObject(ThemeManager.shared)
 }
-

@@ -7,13 +7,15 @@
 
 import SwiftUI
 import AuthenticationServices
+import FirebaseAuth
 
 enum AppRoute: Hashable {
     case photoAnalyzer(VibeResult)
 }
 
 struct ContentView: View {
-    @State private var isAuthenticated = false
+    @StateObject private var authService = FirebaseAuthService()
+    // @StateObject private var onboardingService = FirebaseOnboardingService() // TODO: Enable after adding to Xcode project
     @StateObject private var vm = OnboardingViewModel()
     @State private var path: [AppRoute] = []
     @State private var isLoading = false
@@ -22,29 +24,72 @@ struct ContentView: View {
     @State private var hasCompletedOnboarding = false
     @ObservedObject private var profileService = UserProfileService.shared
     @EnvironmentObject private var themeManager: ThemeManager
+    
+    // MARK: - Developer Mode Properties
+    /// Controls whether developer mode is enabled
+    @State private var isDeveloperModeEnabled = false
+    
+    /// Navigation manager for developer dashboard
+    @StateObject private var developerNavigationManager = DeveloperNavigationManager.shared
+    
+    // MARK: - Shake Detection Properties
+    /// Controls whether shake feedback is visible
+    @State private var showShakeFeedback = false
+    
+    /// Shake detector for developer console toggle
+    @StateObject private var shakeDetector = ShakeDetector()
+    
+    /// Prevents double toggle during shake processing
+    @State private var isShakeProcessing = false
+    
+    /// Last shake action time for additional protection
+    @State private var lastShakeActionTime: Date = Date.distantPast
 
     var body: some View {
-            NavigationStack(path: $path) {
+        NavigationStack(path: $path) {
             Group {
-                if isAuthenticated {
-                    // Check if user has a saved profile OR has completed onboarding
-                    if let currentUserId = UserDefaults.standard.string(forKey: "user_id"),
-                       (profileService.hasProfile(for: currentUserId) || hasCompletedOnboarding) {
-                        // User has saved profile or just completed onboarding - show home screen
+                // MARK: - Developer Mode Check
+                // If developer mode is enabled, show the developer dashboard
+                if isDeveloperModeEnabled {
+                    if developerNavigationManager.isDashboardVisible {
+                        DeveloperDashboard(onShakeTest: {
+                            handleShakeGesture()
+                        })
+                    } else if let currentScreen = developerNavigationManager.currentScreen {
+                        developerNavigationManager.viewForScreen(currentScreen)
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarLeading) {
+                                    Button("Back") {
+                                        developerNavigationManager.goBack()
+                                    }
+                                }
+                                ToolbarItem(placement: .navigationBarTrailing) {
+                                    Button("Dashboard") {
+                                        developerNavigationManager.returnToDashboard()
+                                    }
+                                }
+                            }
+                    }
+                } else if authService.isAuthenticated {
+                    // Check if user has completed onboarding in Firebase OR has a local profile
+                    if let firebaseUser = authService.currentUser,
+                       (profileService.hasProfile(for: firebaseUser.id) || hasCompletedOnboarding) {
+                        // User has completed onboarding in Firebase or locally - show home screen
                         HomeView(onLogout: logout)
+                            // TODO: Load user profile from Firebase onboarding data if it exists
                     } else {
                         // New user or no saved profile - show onboarding
-                OnboardingFlowView(vm: vm)
-                        .onChange(of: vm.finished) { _, finished in
-                            if finished {
-                                let result = vm.makeVibeResult()
-                                saveUserProfile(result)
-                                // Force reload the profile service to get the latest data
-                                profileService.loadCurrentProfile()
-                                // Mark onboarding as completed
-                                hasCompletedOnboarding = true
+                        OnboardingFlowView(vm: vm)
+                            .onChange(of: vm.finished) { _, finished in
+                                if finished {
+                                    let result = vm.makeVibeResult()
+                                    saveUserProfile(result)
+                                    // Force reload the profile service to get the latest data
+                                    profileService.loadCurrentProfile()
+                                    // Mark onboarding as completed
+                                    hasCompletedOnboarding = true
+                                }
                             }
-                        }
                     }
                 } else {
                     // Login screen
@@ -61,7 +106,15 @@ struct ContentView: View {
         }
         .onAppear {
             checkAuthenticationStatus()
+            setupShakeDetection()
         }
+        .onShake {
+            handleShakeGesture()
+        }
+        .overlay(
+            // Shake feedback overlay
+            ShakeFeedbackView(isVisible: $showShakeFeedback)
+        )
     }
     
     private var loginView: some View {
@@ -123,7 +176,7 @@ struct ContentView: View {
                             request.requestedScopes = [.fullName, .email]
                         },
                         onCompletion: { result in
-                            handleAppleSignIn(result)
+                            handleAppleSignInWithFirebase(result)
                         }
                     )
                     .signInWithAppleButtonStyle(themeManager.colorScheme == .dark ? .white : .black)
@@ -160,6 +213,41 @@ struct ContentView: View {
                         }
                     }
                     .padding(.horizontal, 32)
+                    
+                    // MARK: - Developer Mode Toggle
+                    // This allows developers to access the developer dashboard
+                    VStack(spacing: 8) {
+                        Divider()
+                            .background(themeManager.surfaceOutline)
+                            .padding(.horizontal, 32)
+                        
+                        HStack {
+                            Image(systemName: "hammer.fill")
+                                .foregroundColor(themeManager.primary)
+                                .font(.caption)
+                            
+                            Text("Developer Mode")
+                                .font(.caption)
+                                .foregroundColor(themeManager.textSecondary)
+                            
+                            Spacer()
+                            
+                            Toggle("", isOn: $isDeveloperModeEnabled)
+                                .toggleStyle(SwitchToggleStyle(tint: themeManager.primary))
+                                .scaleEffect(0.8)
+                        }
+                        .padding(.horizontal, 32)
+                        .padding(.vertical, 8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(themeManager.surface)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(themeManager.surfaceOutline, lineWidth: 1)
+                                )
+                        )
+                        .padding(.horizontal, 32)
+                    }
                     .padding(.bottom, 34)
                 }
             }
@@ -211,7 +299,66 @@ struct ContentView: View {
     }
     
     private func checkAuthenticationStatus() {
-        isAuthenticated = UserDefaults.standard.bool(forKey: "is_authenticated")
+        // Authentication state is now managed by Firebase AuthService
+    }
+    
+    // MARK: - Shake Detection Methods
+    
+    /// Setup shake detection for developer console toggle
+    private func setupShakeDetection() {
+        // Start shake detection with callback
+        shakeDetector.startShakeDetection {
+            handleShakeGesture()
+        }
+    }
+    
+    /// Handle shake gesture detection with enhanced protection against double triggers
+    private func handleShakeGesture() {
+        let currentTime = Date()
+        
+        // Additional protection: Check if we're already processing a shake
+        if isShakeProcessing {
+            print("🔧 Shake gesture ignored - already processing")
+            return
+        }
+        
+        // Additional protection: Check minimum time between shake actions
+        if currentTime.timeIntervalSince(lastShakeActionTime) < 1.0 {
+            print("🔧 Shake gesture ignored - too soon after last action")
+            return
+        }
+        
+        // Mark as processing to prevent double triggers
+        isShakeProcessing = true
+        lastShakeActionTime = currentTime
+        
+        // Toggle developer mode
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+            isDeveloperModeEnabled.toggle()
+        }
+        
+        // Show visual feedback
+        showShakeFeedback = true
+        
+        // Provide haptic feedback
+        if isDeveloperModeEnabled {
+            ShakeHapticFeedback.success()
+        } else {
+            ShakeHapticFeedback.warning()
+        }
+        
+        // Log the action with timestamp
+        let timestamp = DateFormatter.localizedString(from: Date(), dateStyle: .none, timeStyle: .medium)
+        print("📱 [\(timestamp)] Shake detected - Developer mode \(isDeveloperModeEnabled ? "enabled" : "disabled")")
+        
+        // Additional debug information
+        print("📱 [\(timestamp)] Current authentication state: \(authService.isAuthenticated)")
+        print("📱 [\(timestamp)] Current onboarding completion: \(hasCompletedOnboarding)")
+        
+        // Reset processing flag after a delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            isShakeProcessing = false
+        }
     }
     
     private func logout() {
@@ -222,7 +369,7 @@ struct ContentView: View {
         UserDefaults.standard.removeObject(forKey: "user_full_name")
         
         // Reset app state
-        isAuthenticated = false
+        authService.signOut()
         hasCompletedOnboarding = false
         path = [] // Clear navigation stack
         
@@ -236,89 +383,50 @@ struct ContentView: View {
     }
     
     private func saveUserProfile(_ vibeResult: VibeResult) {
-        guard let userId = UserDefaults.standard.string(forKey: "user_id") else {
-            print("❌ No user ID found for saving profile")
+        guard let firebaseUser = authService.currentUser else {
+            print("❌ No Firebase user found for saving profile")
             return
         }
         
         let userName = vm.userName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let appleIdName = UserDefaults.standard.string(forKey: "user_full_name") ?? ""
-        let finalName = userName.isEmpty ? (appleIdName.isEmpty ? "Era User" : appleIdName) : userName
+        let firebaseName = firebaseUser.fullName ?? ""
+        let finalName = userName.isEmpty ? (firebaseName.isEmpty ? "Era User" : firebaseName) : userName
         
-        
-        let profile = UserProfile.from(vibeResult: vibeResult, userId: userId, name: finalName)
+        let profile = UserProfile.from(vibeResult: vibeResult, userId: firebaseUser.id, name: finalName)
         profileService.saveProfile(profile)
-        print("✅ User profile saved for returning user experience")
+        print("✅ User profile saved for Firebase user: \(firebaseUser.id)")
     }
     
-    private func handleAppleSignIn(_ result: Result<ASAuthorization, Error>) {
-        print("🍎 Apple Sign-In handler called")
+    private func handleAppleSignInWithFirebase(_ result: Result<ASAuthorization, Error>) {
+        print("🔥 Apple Sign-In with Firebase handler called")
         isLoading = true
         
         switch result {
         case .success(let authorization):
-            print("🍎 Apple Sign-In authorization received")
+            print("🔥 Apple Sign-In authorization received, delegating to Firebase Auth Service")
             if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-                let userIdentifier = appleIDCredential.user
-                let fullName = appleIDCredential.fullName
-                let email = appleIDCredential.email
+                // Delegate to Firebase Auth Service
+                authService.handleAppleSignInResult(appleIDCredential)
                 
-                print("🍎 Credential details:")
-                print("🍎 User ID: \(userIdentifier)")
-                print("🍎 Full Name Object: \(String(describing: fullName))")
-                print("🍎 Given Name: \(fullName?.givenName ?? "nil")")
-                print("🍎 Family Name: \(fullName?.familyName ?? "nil")")
-                print("🍎 Email: \(email ?? "nil")")
-                
-                let fullNameString: String?
-                if let givenName = fullName?.givenName, let familyName = fullName?.familyName {
-                    fullNameString = "\(givenName) \(familyName)"
-                    print("🍎 Combined name: \(fullNameString!)")
-                } else {
-                    fullNameString = fullName?.givenName ?? fullName?.familyName
-                    print("🍎 Single name: \(fullNameString ?? "nil")")
-                }
-                
-                print("Apple Sign In successful:")
-                print("User ID: \(userIdentifier)")
-                print("Full Name: \(fullNameString ?? "N/A")")
-                print("Email: \(email ?? "N/A")")
-                
-                // Store basic auth state
-                UserDefaults.standard.set(true, forKey: "is_authenticated")
-                UserDefaults.standard.set(userIdentifier, forKey: "user_id")
-                if let email = email {
-                    UserDefaults.standard.set(email, forKey: "user_email")
-                }
-                
-                // Handle name storage - only store if provided (first sign-in) or if we don't have one stored
-                let existingStoredName = UserDefaults.standard.string(forKey: "user_full_name")
-                print("🍎 Existing stored name: '\(existingStoredName ?? "nil")'")
-                
-                if let fullName = fullNameString {
-                    // New name provided (first sign-in) - store it
-                    UserDefaults.standard.set(fullName, forKey: "user_full_name")
-                    vm.userName = fullName
-                } else if let existingName = existingStoredName {
-                    // No new name, but we have one stored from previous sign-in - use it
-                    vm.userName = existingName
-                } else {
-                    // No name available at all - use default
-                    let defaultName = "Era User"
-                    vm.userName = defaultName
-                }
-                
-                // Clear screen cache to rebuild onboarding flow with correct name input requirement
-                vm.clearScreenCache()
-                
+                // Monitor Firebase Auth state changes
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     self.isLoading = false
-                    self.isAuthenticated = true
+                    if self.authService.isAuthenticated {
+                        print("✅ Firebase authentication successful")
+                        // Refresh user name from Firebase and rebuild onboarding flow
+                        self.vm.refreshUserNameFromUserDefaults()
+                        // TODO: Load onboarding data from Firebase
+                        // self.onboardingService.loadOnboardingData()
+                    } else {
+                        print("❌ Firebase authentication failed")
+                        self.errorMessage = "Authentication failed"
+                        self.showError = true
+                    }
                 }
             }
             
         case .failure(let error):
-            print("🍎 Apple Sign-In failed: \(error.localizedDescription)")
+            print("🔥 Apple Sign-In failed: \(error.localizedDescription)")
             isLoading = false
             errorMessage = "Sign in failed: \(error.localizedDescription)"
             showError = true

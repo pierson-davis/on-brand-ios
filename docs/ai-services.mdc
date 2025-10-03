@@ -1,0 +1,323 @@
+# AI Services & External Integrations
+
+## AI Service Architecture
+
+### AIService Integration
+The app uses OpenAI for photo analysis and vibe matching:
+- **Photo Analysis**: Analyze photos for style and content
+- **Vibe Matching**: Match photos to user's personality archetype
+- **Content Curation**: Select best photos for user's feed
+
+### AIService Usage
+```swift
+// Initialize AI service
+let aiService = AIService()
+
+// Analyze photo
+let analysis = await aiService.analyzePhoto(imageData)
+
+// Get vibe analysis
+let vibeAnalysis = await aiService.analyzeVibe(photos, archetype: userArchetype)
+```
+
+### VibeAnalyzer Integration
+```swift
+// Use VibeAnalyzer for photo curation
+let vibeAnalyzer = VibeAnalyzer()
+let curatedPhotos = vibeAnalyzer.curatePhotos(photos, for: vibeResult)
+
+// Analyze user's style
+let styleAnalysis = vibeAnalyzer.analyzeStyle(photos, archetype: primaryArchetype)
+```
+
+## OpenAI Configuration
+
+### API Configuration
+- **Model**: GPT-4 with vision capabilities
+- **Endpoint**: OpenAI API endpoint
+- **Authentication**: API key from Secrets.xcconfig
+- **Rate Limiting**: Implement proper rate limiting
+
+### Error Handling
+```swift
+// Handle AI service errors
+do {
+    let result = try await aiService.analyzePhoto(imageData)
+    // Process result
+} catch {
+    // Handle error
+    print("❌ AI analysis failed: \(error.localizedDescription)")
+    // Show user-friendly error message
+}
+```
+
+### API Key Management
+- Store API keys in `Secrets.xcconfig`
+- Never commit API keys to version control
+- Use environment variables for different environments
+- Implement key rotation strategy
+
+## Devintest AI Development Tools
+
+### Enhanced AI Testing Capabilities
+The project includes advanced AI development tools in `devintest/tools/`:
+
+#### Multi-Provider AI Testing
+```bash
+# Test with different AI providers
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze this SwiftUI code" --provider "openai"
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Review this implementation" --provider "anthropic"
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Check this logic" --provider "gemini"
+```
+
+#### Vision Analysis for UI Testing
+```bash
+# Analyze app screenshots with AI
+venv/bin/python3 devintest/tools/screenshot_utils.py https://your-app.com screenshot.png
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Analyze this UI design for accessibility and usability" --image screenshot.png --provider "openai"
+```
+
+#### AI Feature Validation
+```bash
+# Test AI email parsing with real examples
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Parse this influencer deal email and extract structured data" --image deal_email.png --provider "gpt-4o"
+```
+
+### AI Development Workflow
+1. **Code Analysis**: Use LLM to analyze SwiftUI code and suggest improvements
+2. **Feature Testing**: Test AI features with real API calls across multiple providers
+3. **UI Verification**: Use screenshot tools + LLM for UI validation
+4. **Competitor Research**: Use web scraping + LLM for market analysis
+5. **Performance Testing**: Test AI response times and accuracy
+
+## Photo Analysis Pipeline
+
+### Photo Processing Steps
+1. **Photo Selection**: User selects photos from library
+2. **Image Processing**: Resize and optimize images
+3. **AI Analysis**: Send to OpenAI for analysis
+4. **Vibe Matching**: Match analysis to user's archetype
+5. **Curation**: Select best photos for user
+6. **Presentation**: Display curated photos to user
+
+### Image Optimization
+```swift
+// Optimize image before sending to AI
+func optimizeImage(_ image: UIImage) -> Data? {
+    // Resize image to optimal size
+    // Compress image data
+    // Convert to appropriate format
+    return imageData
+}
+```
+
+### Batch Processing
+```swift
+// Process multiple photos efficiently
+func processPhotos(_ photos: [UIImage]) async -> [PhotoAnalysis] {
+    let tasks = photos.map { photo in
+        Task {
+            return await analyzePhoto(photo)
+        }
+    }
+    return await withTaskGroup(of: PhotoAnalysis?.self) { group in
+        // Process photos concurrently
+    }
+}
+```
+
+## User Profile Integration
+
+### Archetype System
+The app uses 24 personality-based style archetypes:
+- **12 Male Archetypes**: Different personality styles
+- **12 Female Archetypes**: Different personality styles
+- **Primary/Secondary**: Users can have primary and secondary archetypes
+
+### VibeResult Structure
+```swift
+struct VibeResult {
+    let primaryArchetype: Archetype
+    let secondaryArchetype: Archetype?
+    let confidence: Double
+    let analysis: String
+}
+```
+
+### Profile Creation
+```swift
+// Create user profile from vibe result
+let profile = UserProfile.from(
+    vibeResult: vibeResult,
+    userId: userId,
+    name: userName
+)
+```
+
+## Data Models
+
+### AIPromptModels
+```swift
+// AI request and response models
+struct AIAnalysisRequest {
+    let imageData: Data
+    let prompt: String
+    let maxTokens: Int
+}
+
+struct AIAnalysisResponse {
+    let analysis: String
+    let confidence: Double
+    let suggestions: [String]
+}
+```
+
+### Photo Analysis Models
+```swift
+struct PhotoAnalysis {
+    let photoId: String
+    let analysis: String
+    let confidence: Double
+    let tags: [String]
+    let style: String
+}
+```
+
+## Service Dependencies
+
+### Required Services
+- **AIService**: OpenAI integration
+- **VibeAnalyzer**: Photo curation and analysis
+- **UserProfileService**: Profile management
+- **AuthenticationService**: User authentication
+
+### Service Initialization
+```swift
+// Initialize services in app startup
+let aiService = AIService()
+let vibeAnalyzer = VibeAnalyzer()
+let profileService = UserProfileService.shared
+let authService = AuthenticationService.shared
+```
+
+## Error Handling
+
+### AI Service Errors
+- **Network Errors**: API connectivity issues
+- **Rate Limiting**: API rate limit exceeded
+- **Invalid Response**: Malformed API response
+- **Authentication**: API key issues
+
+### Error Recovery
+```swift
+// Implement retry logic for AI calls
+func analyzePhotoWithRetry(_ imageData: Data, maxRetries: Int = 3) async throws -> PhotoAnalysis {
+    for attempt in 1...maxRetries {
+        do {
+            return try await aiService.analyzePhoto(imageData)
+        } catch {
+            if attempt == maxRetries {
+                throw error
+            }
+            // Wait before retry
+            try await Task.sleep(nanoseconds: UInt64(pow(2.0, Double(attempt)) * 1_000_000_000))
+        }
+    }
+}
+```
+
+## Performance Optimization
+
+### Caching Strategy
+- Cache AI analysis results
+- Cache user profiles
+- Cache photo thumbnails
+- Implement cache invalidation
+
+### Background Processing
+```swift
+// Process photos in background
+Task.detached {
+    let analysis = await aiService.analyzePhoto(imageData)
+    await MainActor.run {
+        // Update UI with results
+    }
+}
+```
+
+### Memory Management
+- Release image data after processing
+- Use weak references for delegates
+- Implement proper cleanup
+- Monitor memory usage
+
+## Testing AI Services
+
+### Mock Services
+```swift
+// Create mock AI service for testing
+class MockAIService: AIServiceProtocol {
+    func analyzePhoto(_ imageData: Data) async throws -> PhotoAnalysis {
+        // Return mock analysis
+    }
+}
+```
+
+### Unit Testing
+- Test AI service methods
+- Test error handling
+- Test data transformations
+- Test caching logic
+
+### Integration Testing
+- Test with real API calls
+- Test with different image types
+- Test with various archetypes
+- Test error scenarios
+
+### Devintest Integration Testing
+```bash
+# Test AI services with devintest tools
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Test this AI service implementation" --provider "anthropic"
+venv/bin/python3 devintest/tools/llm_api.py --prompt "Validate this error handling" --provider "openai"
+```
+
+## Security Considerations
+
+### API Key Security
+- Store keys securely
+- Use environment variables
+- Implement key rotation
+- Monitor API usage
+
+### Data Privacy
+- Don't store sensitive user data
+- Implement data retention policies
+- Use secure data transmission
+- Comply with privacy regulations
+
+### Rate Limiting
+- Implement client-side rate limiting
+- Handle API rate limits gracefully
+- Provide user feedback
+- Implement backoff strategies
+
+## Monitoring and Analytics
+
+### Performance Metrics
+- Track API response times
+- Monitor error rates
+- Track user engagement
+- Monitor resource usage
+
+### Error Tracking
+- Log all AI service errors
+- Track error patterns
+- Monitor API failures
+- Implement alerting
+
+### User Analytics
+- Track photo analysis usage
+- Monitor user preferences
+- Track feature adoption
+- Analyze user behavior

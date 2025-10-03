@@ -1,20 +1,15 @@
 import SwiftUI
 
-// MARK: - Legacy EraPalette (for backward compatibility)
-// This is now deprecated - use ThemeManager.shared instead
-enum EraPalette {
-    static let backgroundTop = Color(red: 0.96, green: 0.96, blue: 0.99)
-    static let backgroundBottom = Color(red: 0.90, green: 0.92, blue: 0.99)
-    static let surface = Color.white.opacity(0.92)
-    static let surfaceOutline = Color.black.opacity(0.05)
-    static let primary = Color(red: 0.20, green: 0.22, blue: 0.75)
-    static let secondary = Color(red: 0.95, green: 0.57, blue: 0.70)
-    static let accent = Color(red: 0.98, green: 0.82, blue: 0.26)
-    static let textPrimary = Color.black
-    static let textSecondary = Color.black.opacity(0.6)
-    static let subtleText = Color.black.opacity(0.4)
-}
+// MARK: - Era Design System
+// This file now serves as the main entry point for the modular design system.
+// All components have been moved to separate files for better organization.
 
+// MARK: - EraPalette
+// This enum has been moved to EraColorPalette.swift for better organization
+
+// MARK: - EraBackground
+// This component has been moved to EraBackground.swift for better organization
+/*
 struct EraBackground: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
@@ -28,7 +23,11 @@ struct EraBackground: View {
         .id("background-\(themeManager.colorScheme)") // Dynamic identifier for theme changes
     }
 }
+*/
 
+// MARK: - EraBadge
+// This component has been moved to EraCards.swift for better organization
+/*
 struct EraBadge: View {
     let text: String
     @EnvironmentObject private var themeManager: ThemeManager
@@ -43,7 +42,11 @@ struct EraBadge: View {
             .clipShape(Capsule())
     }
 }
+*/
 
+// MARK: - EraTopBar
+// This component has been moved to EraNavigation.swift for better organization
+/*
 struct EraTopBar: View {
     var title: String
     var subtitle: String?
@@ -70,7 +73,11 @@ struct EraTopBar: View {
         }
     }
 }
+*/
 
+// MARK: - EraSurfaceCard
+// This component has been moved to EraCards.swift for better organization
+/*
 struct EraSurfaceCard<Content: View>: View {
     var cornerRadius: CGFloat = 28
     var padding: CGFloat = 24
@@ -92,39 +99,14 @@ struct EraSurfaceCard<Content: View>: View {
             )
     }
 }
+*/
 
-struct EraPrimaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.headline)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 18)
-            .frame(maxWidth: .infinity)
-            .background(Color(red: 0.20, green: 0.22, blue: 0.75))
-            .foregroundColor(.white)
-            .cornerRadius(24)
-            .scaleEffect(configuration.isPressed ? 0.96 : 1)
-            .shadow(color: Color(red: 0.20, green: 0.22, blue: 0.75).opacity(0.25), radius: 20, x: 0, y: 12)
-    }
-}
+// MARK: - Button Styles
+// Button styles have been moved to EraButtons.swift for better organization
 
-struct EraSecondaryButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.subheadline.bold())
-            .padding(.horizontal, 18)
-            .padding(.vertical, 14)
-            .background(Color.white.opacity(0.92))
-            .foregroundColor(.black)
-            .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(Color.black.opacity(0.12), lineWidth: 1)
-            )
-            .cornerRadius(20)
-            .scaleEffect(configuration.isPressed ? 0.97 : 1)
-    }
-}
-
+// MARK: - EraSelectableCard
+// This component has been moved to EraCards.swift for better organization
+/*
 struct EraSelectableCard<Content: View>: View {
     var isSelected: Bool
     var action: () -> Void
@@ -156,7 +138,11 @@ struct EraSelectableCard<Content: View>: View {
         .buttonStyle(.plain)
     }
 }
+*/
 
+// MARK: - EraSectionHeader
+// This component has been moved to EraCards.swift for better organization
+/*
 struct EraSectionHeader: View {
     var title: String
     var subtitle: String?
@@ -175,7 +161,11 @@ struct EraSectionHeader: View {
         }
     }
 }
+*/
 
+// MARK: - VibeSummaryCard
+// This component has been moved to EraCards.swift for better organization
+/*
 struct VibeSummaryCard: View {
     var result: VibeResult
     var onProfileTap: (() -> Void)?
@@ -231,7 +221,11 @@ struct VibeSummaryCard: View {
         }
     }
 }
+*/
 
+// MARK: - EraBottomNavigationBar
+// This component has been moved to EraNavigation.swift for better organization
+/*
 struct EraBottomNavigationBar: View {
     @Binding var selectedTab: Tab
     let userArchetype: Archetype
@@ -310,3 +304,4 @@ struct EraBottomNavigationBar: View {
         .padding(.bottom, 0) // Remove extra bottom padding that was causing the background to extend too far
     }
 }
+*/

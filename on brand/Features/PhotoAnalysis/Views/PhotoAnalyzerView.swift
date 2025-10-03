@@ -281,6 +281,9 @@ struct PhotoAnalyzerView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 selectedTab = .home
             }
+        case .deals:
+            // Navigate to deals tab
+            selectedTab = .deals
         case .profile:
             showingProfile = true
             // Reset to home tab after showing profile
