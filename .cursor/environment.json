@@ -1,0 +1,19 @@
+{
+  "snapshot": "POPULATED_FROM_SETTINGS",
+  "install": "cd 'on brand' && xcodebuild -project 'on brand.xcodeproj' -scheme 'on brand' -configuration Debug build",
+  "start": "cd 'on brand' && xcodebuild -project 'on brand.xcodeproj' -scheme 'on brand' -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 15' run",
+  "terminals": [
+    {
+      "name": "iOS Simulator",
+      "command": "cd 'on brand' && xcrun simctl boot 'iPhone 15' || echo 'Simulator already running'"
+    },
+    {
+      "name": "Build Monitor",
+      "command": "cd 'on brand' && xcodebuild -project 'on brand.xcodeproj' -scheme 'on brand' -configuration Debug build"
+    },
+    {
+      "name": "Git Status",
+      "command": "git status"
+    }
+  ]
+}
